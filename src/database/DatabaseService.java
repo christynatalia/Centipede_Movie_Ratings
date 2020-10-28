@@ -7,7 +7,7 @@ import java.sql.SQLException;
 
 public class DatabaseService 
 {
-	private static final String HOST = "jdbc:mysql://localhost:3306/FinalProjectData?serverTimezone=UTC";
+	private static final String HOST = "jdbc:mysql://localhost:3306/CentipedeMovieRating?serverTimezone=UTC";
 	private static final String USERNAME = "root";
 	private static final String PASSWORD = "centipedeMan";
 	private Connection c;

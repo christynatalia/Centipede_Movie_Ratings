@@ -24,6 +24,9 @@ public class DatabaseService
 	}
 	
 	//Private Methods
+	/**
+	 * Initializes the class. It checks for existance of database. If not create it. Tables are also checked and created if needed.
+	 */
 	private void init()
 	{
 		//Connect to mysql database
@@ -54,39 +57,11 @@ public class DatabaseService
 			}
 		}
 	}
-	
-	//Public Methods
-	/**
-	 * Gets the database Connection object
-	 * @return the connection to the MySQL
-	 */
-	public Connection getConnection()
-	{
-		return this.c;
-	}
-	/**
-	 * Prepares the MySQL Query statement before execution.
-	 * @param query - the MySQL query command
-	 * @return a PreparedStatement object
-	 */
-	public PreparedStatement prepStatement(String query)
-	{
-		try
-		{
-			PreparedStatement prepStat = c.prepareStatement(query);
-			return prepStat;
-		}
-		catch (SQLException ex)
-		{
-			System.err.println(ex.getMessage());
-			return null;
-		}
-	}
 	/**
 	 * Creates the MySQL database.
 	 * @throws SQLException
 	 */
-	public void createDatabase() throws SQLException
+	private void createDatabase() throws SQLException
 	{
 		PreparedStatement prep = this.prepStatement("CREATE DATABASE " + DB_NAME);
 		prep.execute();
@@ -96,7 +71,7 @@ public class DatabaseService
 	 * Creates the tables if they do not exist yet
 	 * @throws SQLException
 	 */
-	public void createTables() throws SQLException
+	private void createTables() throws SQLException
 	{
 		//Movie table
 		PreparedStatement prep = this.prepStatement("CREATE TABLE if not exists " + TABLE_MOVIE + "("
@@ -128,6 +103,34 @@ public class DatabaseService
 		
 		prep.execute();
 		prep.close();
+	}
+	
+	//Public Methods
+	/**
+	 * Gets the database Connection object
+	 * @return the connection to the MySQL
+	 */
+	public Connection getConnection()
+	{
+		return this.c;
+	}
+	/**
+	 * Prepares the MySQL Query statement before execution.
+	 * @param query - the MySQL query command
+	 * @return a PreparedStatement object
+	 */
+	public PreparedStatement prepStatement(String query)
+	{
+		try
+		{
+			PreparedStatement prepStat = c.prepareStatement(query);
+			return prepStat;
+		}
+		catch (SQLException ex)
+		{
+			System.err.println(ex.getMessage());
+			return null;
+		}
 	}
 	
 	public static void main (String args[])

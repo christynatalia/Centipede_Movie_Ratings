@@ -3,30 +3,50 @@ package database;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 
 public class DatabaseService 
 {
-	private static final String HOST = "jdbc:mysql://localhost:3306/CentipedeMovieRating?",
+	private static final String HOST = "jdbc:mysql://localhost:3306/",
 								USERNAME = "root",
-								PASSWORD = "centipedeMan",
-								DB_NAME = "CMR";
+								PASSWORD = "",
+								DB_NAME = "CMR",
+								TABLE_MOVIE = "Movie",
+								TABLE_REVIEW = "Review",
+								TABLE_USER = "User";
 	
 	private Connection c;
 	
 	//Constructor
 	public DatabaseService()
 	{
+		this.init();
+	}
+	
+	//Private Methods
+	private void init()
+	{
 		//Connect to mysql database
 		try
 		{
-			c = DriverManager.getConnection(HOST, USERNAME, PASSWORD);
+			//Try to connect to the database
+			c = DriverManager.getConnection(HOST + DB_NAME, USERNAME, PASSWORD);
 		}
 		catch (SQLException ex)
 		{
-			System.out.println(ex.getMessage());
+			//If it goes here, most likely the database has not been created yet.
+			System.err.println(ex.getMessage());
+			try
+			{
+				//Create the database and try to connect again.
+				c = DriverManager.getConnection(HOST, USERNAME, PASSWORD);
+				this.createDatabase();
+				this.init();
+			} 
+			catch (SQLException e) 
+			{
+				System.err.println(ex.getMessage());
+			}
 		}
 	}
 	
@@ -39,6 +59,11 @@ public class DatabaseService
 	{
 		return this.c;
 	}
+	/**
+	 * Prepares the MySQL Query statement before execution.
+	 * @param query - the MySQL query command
+	 * @return a PreparedStatement object
+	 */
 	public PreparedStatement prepStatement(String query)
 	{
 		try
@@ -48,55 +73,29 @@ public class DatabaseService
 		}
 		catch (SQLException ex)
 		{
-			System.out.println(ex.getMessage());
+			System.err.println(ex.getMessage());
 			return null;
 		}
 	}
 	/**
-	 * Creates the MySQL database, unless it already exists.
+	 * Creates the MySQL database.
 	 */
-	public void createDatabase()
+	public void createDatabase() throws SQLException
 	{
-		Statement statement = null;
-		ResultSet rs = null;
+		//Create the database
+		PreparedStatement prep = this.prepStatement("CREATE DATABASE " + DB_NAME);
+		prep.execute();
 		
-		try
-		{
-			statement = c.createStatement();
-			
-			//Create database
-			rs = statement.executeQuery("CREATE DATABASE " + DB_NAME);
-			
-			//Create tables
-			
-		}
-		catch(SQLException ex)
-		{
-			System.out.println("SQLException: " + ex.getMessage());
-		    System.out.println("SQLState: " + ex.getSQLState());
-		    System.out.println("VendorError: " + ex.getErrorCode());
-		}
-		finally
-		{
-			if (rs != null)
-			{
-				try
-				{
-					rs.close();
-				}
-				catch(SQLException ex){}
-				rs = null;
-			}
-			
-			if (statement != null)
-			{
-				try
-				{
-					statement.close();
-				}
-				catch(SQLException ex) {}
-				statement = null;
-			}
-		}
+		//Create the table
+		prep = this.prepStatement("CREATE TABLE " + TABLE_MOVIE + "("
+									+ "movieID int unsigned NOT NULL AUTO_INCREMENT,"
+									+ "movieName varchar(255) NOT NULL,"
+									+ "PRIMARY KEY (movieID))");
+		prep.execute();
+	}
+	
+	public static void main (String args[])
+	{
+		DatabaseService ds = new DatabaseService();
 	}
 }

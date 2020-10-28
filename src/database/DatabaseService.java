@@ -31,6 +31,10 @@ public class DatabaseService
 		{
 			//Try to connect to the database
 			c = DriverManager.getConnection(HOST + DB_NAME, USERNAME, PASSWORD);
+			System.out.println("Database connection successful");
+			
+			//Check for tables
+			this.createTables();
 		}
 		catch (SQLException ex)
 		{
@@ -46,6 +50,7 @@ public class DatabaseService
 			catch (SQLException e) 
 			{
 				System.err.println(ex.getMessage());
+				System.out.println("Database connection failed after creating table");
 			}
 		}
 	}
@@ -79,19 +84,26 @@ public class DatabaseService
 	}
 	/**
 	 * Creates the MySQL database.
+	 * @throws SQLException
 	 */
 	public void createDatabase() throws SQLException
 	{
-		//Create the database
 		PreparedStatement prep = this.prepStatement("CREATE DATABASE " + DB_NAME);
 		prep.execute();
-		
-		//Create the table
-		prep = this.prepStatement("CREATE TABLE " + TABLE_MOVIE + "("
-									+ "movieID int unsigned NOT NULL AUTO_INCREMENT,"
-									+ "movieName varchar(255) NOT NULL,"
-									+ "PRIMARY KEY (movieID))");
+		prep.close();
+	}
+	/**
+	 * Creates the tables if they do not exist yet
+	 * @throws SQLException
+	 */
+	public void createTables() throws SQLException
+	{
+		PreparedStatement prep = this.prepStatement("CREATE TABLE if not exists " + TABLE_MOVIE + "("
+													+ "movieID int unsigned NOT NULL AUTO_INCREMENT,"
+													+ "movieName varchar(255) NOT NULL,"
+													+ "primary key (movieID))");
 		prep.execute();
+		prep.close();
 	}
 	
 	public static void main (String args[])

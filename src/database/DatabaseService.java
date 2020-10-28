@@ -98,10 +98,34 @@ public class DatabaseService
 	 */
 	public void createTables() throws SQLException
 	{
+		//Movie table
 		PreparedStatement prep = this.prepStatement("CREATE TABLE if not exists " + TABLE_MOVIE + "("
 													+ "movieID int unsigned NOT NULL AUTO_INCREMENT,"
 													+ "movieName varchar(255) NOT NULL,"
 													+ "primary key (movieID))");
+		prep.execute();
+		
+		//User table
+		prep = this.prepStatement("CREATE TABLE if not exists " + TABLE_USER + "("
+									+ "userID int unsigned not null AUTO_INCREMENT,"
+									+ "firstName varchar(255) not null,\r\n" + 
+										"lastName varchar(255),\r\n" + 
+										"username varchar(255) not null,\r\n" + 
+										"password varchar(255) not null,"
+									+ "primary key (userID))");
+		prep.execute();
+		
+		//Review table
+		prep = this.prepStatement("CREATE TABLE if not exists " + TABLE_REVIEW + "("
+				+ "reviewID int unsigned not null AUTO_INCREMENT,\r\n" + 
+				"movieID int unsigned not null,\r\n" + 
+				"userID int unsigned not null,\r\n" + 
+				"description mediumtext,\r\n" + 
+				"ratingUser decimal(1, 1) not null,\r\n" + 
+				"primary key (reviewID),\r\n" + 
+				"foreign key (movieID) references Movie(movieID) on update cascade,\r\n" + 
+				"foreign key (userID) references User(userID) on update cascade)");
+		
 		prep.execute();
 		prep.close();
 	}

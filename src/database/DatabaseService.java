@@ -5,12 +5,16 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
+import models.Movie;
+import models.Review;
+import models.User;
+
 public class DatabaseService 
 {
 	private static final String HOST = "jdbc:mysql://localhost:3306/",
 								USERNAME = "root",
-								PASSWORD = "",
-								DB_NAME = "CMR",
+								PASSWORD = "";
+	public static final String DB_NAME = "CMR",
 								TABLE_MOVIE = "Movie",
 								TABLE_REVIEW = "Review",
 								TABLE_USER = "User";
@@ -96,7 +100,7 @@ public class DatabaseService
 				"movieID int unsigned not null,\r\n" + 
 				"userID int unsigned not null,\r\n" + 
 				"description mediumtext,\r\n" + 
-				"ratingUser decimal(1, 1) not null,\r\n" + 
+				"ratingUser decimal(10, 1) not null,\r\n" + 
 				"primary key (reviewID),\r\n" + 
 				"foreign key (movieID) references Movie(movieID) on update cascade,\r\n" + 
 				"foreign key (userID) references User(userID) on update cascade)");
@@ -132,9 +136,144 @@ public class DatabaseService
 			return null;
 		}
 	}
+	/**
+	 * Insert a Movie to the database
+	 * @param movie
+	 */
+	public void insert(Movie movie)
+	{
+		PreparedStatement ps = null;
+		try
+		{		
+			if (movie.getID() <= 0)	//If no ID yet
+			{
+				ps = this.prepStatement("INSERT INTO " + TABLE_MOVIE + "(movieName) values (\'" + movie.getName() + "\')");
+			}
+			else
+			{
+				ps = this.prepStatement("INSERT INTO " + TABLE_MOVIE + " values (" + movie.getID() + ", \'" + movie.getName() + "\')");
+			}
+			
+			ps.execute();
+		}
+		catch(SQLException ex)
+		{
+			System.err.println(ex.getMessage());
+		}
+		finally
+		{
+			if (ps != null)
+			{
+				try 
+				{
+					ps.close();
+				}
+				catch (SQLException e) {}
+			}
+		}
+	}
+	/**
+	 * Insert a User to the database
+	 * @param user
+	 */
+	public void insert(User user)
+	{
+		PreparedStatement ps = null;
+		try
+		{
+			if (user.getUserID() <= 0)	//If no ID yet
+			{
+				ps = this.prepStatement("INSERT INTO " + TABLE_USER + 
+										"(firstName, lastName, username, password) values "
+										+ "(\'" + user.getFirstName() 
+										+ "\', \'" + user.getLastName() + "\', "
+										+ "\'" + user.getUsername() + "\', "
+										+ "\'" + user.getPassword() + "\')");
+			}
+			else
+			{
+				ps = this.prepStatement("INSERT INTO " + TABLE_USER + " values "
+											+ "(" + user.getUserID() + ", "
+											+ "\'" + user.getFirstName() + "\', "
+											+ "\'" + user.getLastName() + "\', "
+											+ "\'" + user.getUsername() + "\', "
+											+ "\'" + user.getPassword() + "\')");
+			}
+			
+			ps.execute();
+		}
+		catch(SQLException ex)
+		{
+			System.err.println(ex.getMessage());
+		}
+		finally
+		{
+			if (ps != null)
+			{
+				try 
+				{
+					ps.close();
+				}
+				catch (SQLException e) {}
+			}
+		}
+	}
+	/**
+	 * Insert a Review to the database
+	 * @param review
+	 */
+	public void insert(Review review)
+	{
+		PreparedStatement ps = null;
+		try
+		{
+			if (review.getReviewID() <= 0)	//If no ID yet
+			{
+				ps = this.prepStatement("INSERT INTO " + TABLE_REVIEW + 
+										"(movieID, userID, description, ratingUser) values "
+										+ "(\'" + review.getMovieID() + "\', "
+										+ "\'" + review.getUserID() + "\', "
+										+ "\'" + review.getDesc() + "\', "
+										+ "\'" + review.getUserRating() + "\')");
+			}
+			else
+			{
+				ps = this.prepStatement("INSERT INTO " + TABLE_REVIEW + " values "
+										+ "(" + review.getReviewID() + ", "
+										+ "\'" + review.getMovieID() + "\', "
+										+ "\'" + review.getUserID() + "\', "
+										+ "\'" + review.getDesc() + "\', "
+										+ "\'" + review.getUserRating() + "\')");
+			}
+			
+			ps.execute();
+		}
+		catch(SQLException ex)
+		{
+			System.err.println(ex.getMessage());
+		}
+		finally
+		{
+			if (ps != null)
+			{
+				try 
+				{
+					ps.close();
+				}
+				catch (SQLException e) {}
+			}
+		}
+	}
 	
 	public static void main (String args[])
 	{
 		DatabaseService ds = new DatabaseService();
+		Movie m = new Movie(1, "Lord of the Rings");
+		User u = new User(1, "John", "Garret", "sjcoaos", "pass");
+		Review r = new Review(0, m.getID(), u.getUserID(), "Epic Rohan", 5.0f);
+		
+		ds.insert(m);
+		ds.insert(u);
+		ds.insert(r);
 	}
 }

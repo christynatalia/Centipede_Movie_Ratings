@@ -265,15 +265,129 @@ public class DatabaseService
 		}
 	}
 	
+	/**
+	 * Update a Movie record
+	 * @param id - the id of the movie record to be updated
+	 * @param movie - new details about the movie
+	 */
+	public void update(int id, Movie movie)
+	{
+		PreparedStatement ps = null;
+		try
+		{
+			ps = this.prepStatement("UPDATE " + TABLE_MOVIE 
+									+ " SET "
+										+ "movieID=" + movie.getID() + ", "
+										+ "movieName=\'" + movie.getName() + "\'" 
+									+ " WHERE movieID=" + id);
+			ps.execute();
+		}
+		catch(SQLException ex)
+		{
+			System.err.println(ex.getMessage());
+		}
+		finally
+		{
+			if (ps != null)
+			{
+				try
+				{
+					ps.close();
+				}
+				catch(SQLException ex) {}
+			}
+		}
+	}
+	/**
+	 * Update a User record
+	 * @param id - the id of the user record to be updated
+	 * @param movie - new details about the user
+	 */
+	public void update(int id, User user)
+	{
+		PreparedStatement ps = null;
+		try
+		{
+			ps = this.prepStatement("UPDATE " + TABLE_USER 
+									+ " SET "
+										+ "userID=" + user.getUserID() + ", "
+										+ "firstName=\'" + user.getFirstName() + "\'," 
+										+ "lastName=\'" + user.getLastName() + "\'," 
+										+ "username=\'" + user.getUsername() + "\',"
+										+ "password=\'" + user.getPassword() + "\'"
+									+ " WHERE userID=" + id);
+			ps.execute();
+		}
+		catch(SQLException ex)
+		{
+			System.err.println(ex.getMessage());
+		}
+		finally
+		{
+			if (ps != null)
+			{
+				try
+				{
+					ps.close();
+				}
+				catch(SQLException ex) {}
+			}
+		}
+	}
+	/**
+	 * Update a Review record
+	 * @param id - the id of the review record to be updated
+	 * @param movie - new details about the review
+	 */
+	public void update(int id, Review review)
+	{
+		PreparedStatement ps = null;
+		try
+		{
+			ps = this.prepStatement("UPDATE " + TABLE_REVIEW 
+									+ " SET "
+										+ "reviewID=" + review.getReviewID() + ", "
+										+ "movieID=" + review.getMovieID() + "," 
+										+ "userID=" + review.getUserID() + "," 
+										+ "description=\'" + review.getDesc() + "\',"
+										+ "ratingUser=" + review.getUserRating() + ""
+									+ " WHERE reviewID=" + id);
+			ps.execute();
+		}
+		catch(SQLException ex)
+		{
+			System.err.println(ex.getMessage());
+		}
+		finally
+		{
+			if (ps != null)
+			{
+				try
+				{
+					ps.close();
+				}
+				catch(SQLException ex) {}
+			}
+		}
+	}
+	
 	public static void main (String args[])
 	{
 		DatabaseService ds = new DatabaseService();
-		Movie m = new Movie(1, "Lord of the Rings");
-		User u = new User(1, "John", "Garret", "sjcoaos", "pass");
-		Review r = new Review(0, m.getID(), u.getUserID(), "Epic Rohan", 5.0f);
+//		Movie m = new Movie(1, "Lord of the Rings");
+//		User u = new User(1, "John", "Garret", "sjcoaos", "pass");
+//		Review r = new Review(0, m.getID(), u.getUserID(), "Epic Rohan", 5.0f);
+//		
+//		ds.insert(m);
+//		ds.insert(u);
+//		ds.insert(r);
 		
-		ds.insert(m);
-		ds.insert(u);
-		ds.insert(r);
+		Movie m = new Movie(1, "Lord of the Rings");
+		User u = new User(1, "Gary", "Garret", "asascdscds", "pass");
+		Review r = new Review(1, m.getID(), u.getUserID(), "Saruman Lives", 4.5f);
+		
+		ds.update(m.getID(), m);
+		ds.update(u.getUserID(), u);
+		ds.update(2, r);
 	}
 }

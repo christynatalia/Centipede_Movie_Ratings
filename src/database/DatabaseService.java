@@ -301,7 +301,7 @@ public class DatabaseService
 	/**
 	 * Update a User record
 	 * @param id - the id of the user record to be updated
-	 * @param movie - new details about the user
+	 * @param user - new details about the user
 	 */
 	public void update(int id, User user)
 	{
@@ -337,7 +337,7 @@ public class DatabaseService
 	/**
 	 * Update a Review record
 	 * @param id - the id of the review record to be updated
-	 * @param movie - new details about the review
+	 * @param review - new details about the review
 	 */
 	public void update(int id, Review review)
 	{

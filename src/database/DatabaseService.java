@@ -3,7 +3,10 @@ package database;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 import models.Movie;
 import models.Review;
@@ -370,6 +373,164 @@ public class DatabaseService
 			}
 		}
 	}
+	/**
+	 * Performs a select * operation on the Movie table.
+	 * @return a List containing Movie objects
+	 */
+	public List<Movie> getAllMovies()
+	{
+		List<Movie> movies = new ArrayList<Movie>();
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+		
+		try
+		{
+			ps = this.prepStatement("SELECT * FROM " + TABLE_MOVIE);
+			rs = ps.executeQuery();
+			
+			//Loop through the result set
+			while (rs.next())
+			{
+				Movie movie = new Movie(rs.getInt(1), rs.getString(2));
+				movies.add(movie);
+			}
+			
+		}
+		catch(SQLException ex)
+		{
+			System.err.println(ex.getMessage());
+		}
+		finally
+		{
+			if (ps != null)
+			{
+				try
+				{
+					ps.close();
+				}
+				catch(SQLException ex) {}
+			}
+			
+			if (rs != null)
+			{
+				try
+				{
+					rs.close();
+				}
+				catch(SQLException ex) {}
+			}
+		}
+		
+		return movies;
+	}
+	/**
+	 * Performs a select * operation on the User table.
+	 * @return a List containing User objects
+	 */
+	public List<User> getAllUsers()
+	{
+		List<User> users = new ArrayList<User>();
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+		
+		try
+		{
+			ps = this.prepStatement("SELECT * FROM " + TABLE_USER);
+			rs = ps.executeQuery();
+			
+			//Loop through the result set
+			while (rs.next())
+			{
+				User user = new User(rs.getInt(1),
+										rs.getString(2),
+										rs.getString(3),
+										rs.getString(4),
+										rs.getString(5));
+				users.add(user);
+			}
+			
+		}
+		catch(SQLException ex)
+		{
+			System.err.println(ex.getMessage());
+		}
+		finally
+		{
+			if (ps != null)
+			{
+				try
+				{
+					ps.close();
+				}
+				catch(SQLException ex) {}
+			}
+			
+			if (rs != null)
+			{
+				try
+				{
+					rs.close();
+				}
+				catch(SQLException ex) {}
+			}
+		}
+		
+		return users;
+	}
+	/**
+	 * Performs a select * operation on the Review table.
+	 * @return a List containing Review objects
+	 */
+	public List<Review> getAllReviews()
+	{
+		List<Review> reviews = new ArrayList<Review>();
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+		
+		try
+		{
+			ps = this.prepStatement("SELECT * FROM " + TABLE_REVIEW);
+			rs = ps.executeQuery();
+			
+			//Loop through the result set
+			while (rs.next())
+			{
+				Review review = new Review(rs.getInt(1),
+											rs.getInt(2),
+											rs.getInt(3),
+											rs.getString(4),
+											rs.getFloat(5));
+				reviews.add(review);
+			}
+			
+		}
+		catch(SQLException ex)
+		{
+			System.err.println(ex.getMessage());
+		}
+		finally
+		{
+			if (ps != null)
+			{
+				try
+				{
+					ps.close();
+				}
+				catch(SQLException ex) {}
+			}
+			
+			if (rs != null)
+			{
+				try
+				{
+					rs.close();
+				}
+				catch(SQLException ex) {}
+			}
+		}
+		
+		return reviews;
+	}
 	
 	public static void main (String args[])
 	{
@@ -382,12 +543,12 @@ public class DatabaseService
 //		ds.insert(u);
 //		ds.insert(r);
 		
-		Movie m = new Movie(1, "Lord of the Rings");
-		User u = new User(1, "Gary", "Garret", "asascdscds", "pass");
-		Review r = new Review(1, m.getID(), u.getUserID(), "Saruman Lives", 4.5f);
-		
-		ds.update(m.getID(), m);
-		ds.update(u.getUserID(), u);
-		ds.update(2, r);
+//		Movie m = new Movie(1, "Lord of the Rings");
+//		User u = new User(1, "Gary", "Garret", "asascdscds", "pass");
+//		Review r = new Review(1, m.getID(), u.getUserID(), "Saruman Lives", 4.5f);
+//		
+//		ds.update(m.getID(), m);
+//		ds.update(u.getUserID(), u);
+//		ds.update(2, r);
 	}
 }

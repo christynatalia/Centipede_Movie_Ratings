@@ -12,6 +12,7 @@ public class Login {
 	public static void main(String[] args) {  
 		JFrame frame=new JFrame("Centipede Movie Ratings");
 		frame.setSize(500,300);
+		frame.setResizable(false);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
 		JPanel panel1 = new JPanel();
@@ -28,35 +29,35 @@ public class Login {
 
 		// create the login label
 		JLabel loginLabel = new JLabel("Login");
-		loginLabel.setBounds(20,5,400,50);
+		loginLabel.setBounds(20, 5, 400, 50);
 		loginLabel.setFont(fontTitle);
 		panel1.add(loginLabel);
 		
 		// create the username label
 		JLabel usernameLabel = new JLabel("username");
-		usernameLabel.setBounds(20,70,150,20);
+		usernameLabel.setBounds(20, 70, 150, 20);
 		usernameLabel.setFont(font1);
 		panel1.add(usernameLabel);
 		
 		//create the password label 
 		JLabel passwordLabel = new JLabel("password");
-		passwordLabel.setBounds(20,100,150,20);
+		passwordLabel.setBounds(20, 100, 150, 20);
 		passwordLabel.setFont(font1);
 		panel1.add(passwordLabel);
 		
 		//create the username textfield
 		JTextField usernameText = new JTextField();
-		usernameText.setBounds(200,70, 200, 20);
+		usernameText.setBounds(200, 70, 200, 20);
 		panel1.add(usernameText);
 		
 		//create the password textfield
 		JTextField passwordText = new JTextField();
-		passwordText.setBounds(200,100, 200, 20);
+		passwordText.setBounds(200, 100, 200, 20);
 		panel1.add(passwordText);
 		
 		//create the login
 		JButton loginButton = new JButton("Login");
-		loginButton.setBounds(353, 228, 150, 50);
+		loginButton.setBounds(337, 214, 150, 50);
 		panel1.add(loginButton);
 		
 	}

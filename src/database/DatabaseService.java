@@ -32,7 +32,7 @@ public class DatabaseService
 	
 	//Private Methods
 	/**
-	 * Initializes the class. It checks for existance of database. If not create it. Tables are also checked and created if needed.
+	 * Initializes the class. It checks for existence of database. If not create it. Tables are also checked and created if needed.
 	 */
 	private void init()
 	{
@@ -532,6 +532,46 @@ public class DatabaseService
 		return reviews;
 	}
 	
+	/**
+	 * Returns a float number which is the average movie rating of a movie with it's parameter 
+	 * being the movie we want to count the average of it's rating
+	 * @param movie 
+	 */
+	public float countAverageMovieRating(Movie movie) {
+		float movieRating = 0;
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+		
+		try
+		{
+			ps = this.prepStatement("SELECT AVG(ratingUser) from "+ TABLE_REVIEW
+					+ " INNER JOIN " + TABLE_MOVIE + " ON review.movieID = Movie.movieID "
+					+ "where Movie.movieID = " + movie.getID());
+			rs = ps.executeQuery();
+			
+			while(rs.next()) 
+			{
+				movieRating = rs.getFloat(1);
+			}
+		}
+		catch(SQLException ex)
+		{
+			System.err.println(ex.getMessage());
+		}
+		finally
+		{
+			if (ps != null)
+			{
+				try
+				{
+					ps.close();
+				}
+				catch(SQLException ex) {}
+			}
+		}
+		return movieRating;
+	}
+	
 	public static void main (String args[])
 	{
 		DatabaseService ds = new DatabaseService();
@@ -545,10 +585,13 @@ public class DatabaseService
 		
 //		Movie m = new Movie(1, "Lord of the Rings");
 //		User u = new User(1, "Gary", "Garret", "asascdscds", "pass");
+//		User u1 = new User(2, "Bruhyan", "Ultra", "bryan150929", "bruh");
 //		Review r = new Review(1, m.getID(), u.getUserID(), "Saruman Lives", 4.5f);
+//		Review r1 = new Review(2, m.getID(), u1.getUserID(), "LOL", 5.0f);
 //		
 //		ds.update(m.getID(), m);
 //		ds.update(u.getUserID(), u);
 //		ds.update(2, r);
+//		ds.countAverageMovieRating(m);
 	}
 }

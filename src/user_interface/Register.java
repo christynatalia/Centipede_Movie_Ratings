@@ -13,6 +13,7 @@ public class Register {
 		frame.setSize(500,300);
 		frame.setResizable(false);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frame.setLocationRelativeTo(null);
 		
 		JPanel panel1 = new JPanel();
 		frame.add(panel1);

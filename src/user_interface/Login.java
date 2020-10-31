@@ -1,4 +1,5 @@
 package user_interface;
+import java.awt.BorderLayout;
 import java.awt.Font;
 
 import javax.swing.JButton;
@@ -14,6 +15,7 @@ public class Login {
 		frame.setSize(500,300);
 		frame.setResizable(false);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frame.setLocationRelativeTo(null);
 		
 		JPanel panel1 = new JPanel();
 		frame.add(panel1);
@@ -22,7 +24,7 @@ public class Login {
 	}
 	
 	private static void initialize(JPanel panel1) {
-		panel1.setLayout(null);
+		panel1.setLayout(new BorderLayout());
 		
 		Font fontTitle = new Font("Arial", Font.BOLD,40);
 		Font font1 = new Font("Arial",Font.PLAIN,18);

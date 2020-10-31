@@ -538,7 +538,7 @@ public class DatabaseService
 	 * @param movie 
 	 */
 	
-	public float countAverageMovieRating(Movie movie) {
+	public float countAverageMovieRating(int movieID) {
 		float movieRating = 0;
 		PreparedStatement ps = null;
 		ResultSet rs = null;
@@ -547,13 +547,12 @@ public class DatabaseService
 		{
 			ps = this.prepStatement("SELECT AVG(ratingUser) from "+ TABLE_REVIEW
 					+ " INNER JOIN " + TABLE_MOVIE + " ON review.movieID = Movie.movieID "
-					+ "where Movie.movieID = " + movie.getID());
+					+ "where Movie.movieID = " + movieID);
 			rs = ps.executeQuery();
 			
-			while(rs.next()) 
-			{
-				movieRating = rs.getFloat(1);
-			}
+			rs.next();
+			movieRating = rs.getFloat(1);
+			
 		}
 		catch(SQLException ex)
 		{

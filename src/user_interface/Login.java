@@ -24,7 +24,7 @@ public class Login {
 	}
 	
 	private static void initialize(JPanel panel1) {
-		panel1.setLayout(new BorderLayout());
+		panel1.setLayout(null);
 		
 		Font fontTitle = new Font("Arial", Font.BOLD,40);
 		Font font1 = new Font("Arial",Font.PLAIN,18);

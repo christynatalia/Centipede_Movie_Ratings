@@ -1,15 +1,24 @@
 package user_interface;
 import java.awt.Font;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
+import database.DatabaseService;
+import models.User;
+
 public class Register {
+	
+	static JFrame frame;
+	
 	public static void main(String[] args) {  
-		JFrame frame=new JFrame("Centipede Movie Ratings");
+		frame = new JFrame("Centipede Movie Ratings");
 		frame.setSize(500,300);
 		frame.setResizable(false);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -23,6 +32,7 @@ public class Register {
 	
 	private static void initialize(JPanel panel1) {
 		panel1.setLayout(null);
+		DatabaseService ds = new DatabaseService();
 		
 		Font fontTitle = new Font("Arial", Font.BOLD,40);
 		Font font1 = new Font("Arial",Font.PLAIN,18);
@@ -77,10 +87,61 @@ public class Register {
 		passwordText.setBounds(200, 160, 200, 20);
 		panel1.add(passwordText);
 		
+		//create red star labels to kasi tau user belum ngisi
+		JLabel starLabel = new JLabel("*");
+		JLabel starLabel2 = new JLabel("*");
+		JLabel starLabel3 = new JLabel("*");
+		JLabel starLabel4 = new JLabel("*");
+		starLabel.setBounds(400, 60, 20, 20);
+		starLabel2.setBounds(400, 90, 20, 20);
+		starLabel3.setBounds(400, 120, 20, 20);
+		starLabel4.setBounds(400, 150, 20, 20);
+		starLabel.setForeground(new java.awt.Color(255, 51, 51));
+		starLabel2.setForeground(new java.awt.Color(255, 51, 51));
+		starLabel3.setForeground(new java.awt.Color(255, 51, 51));
+		starLabel4.setForeground(new java.awt.Color(255, 51, 51));
+		panel1.add(starLabel);
+		panel1.add(starLabel2);
+		panel1.add(starLabel3);
+		panel1.add(starLabel4);
+		starLabel.setVisible(false);
+		starLabel2.setVisible(false);
+		starLabel3.setVisible(false);
+		starLabel4.setVisible(false);
+		
 		//create the Register button
 		JButton registerButton = new JButton("Register");
 		registerButton.setBounds(337, 214, 150, 50);
 		panel1.add(registerButton);
+		registerButton.addActionListener(new ActionListener() {			
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				if(firstNameText.getText().equals("")) {
+					starLabel.setVisible(true);
+				}
+				if(lastNameText.getText().equals("")) {
+					starLabel2.setVisible(true);
+				}
+				if(passwordText.getText().equals("")) {
+					starLabel3.setVisible(true);
+				}
+				if(usernameText.getText().equals("")) {
+					starLabel4.setVisible(true);
+				}
+				else {
+					ds.insert(new User(0, firstNameText.getText(), lastNameText.getText(), usernameText.getText(), passwordText.getText()));
+					JOptionPane.showMessageDialog(null, "User Successfully Registered");
+					firstNameText.setText("");
+					lastNameText.setText("");
+					usernameText.setText("");
+					passwordText.setText("");
+					starLabel.setVisible(false);
+					starLabel2.setVisible(false);
+					starLabel3.setVisible(false);
+					starLabel4.setVisible(false);
+				}
+			}
+		});
 		
 	}
 }

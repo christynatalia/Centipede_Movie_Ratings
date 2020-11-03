@@ -533,11 +533,10 @@ public class DatabaseService
 	}
 	
 	/**
-	 * Returns a float number which is the average movie rating of a movie with it's parameter 
-	 * being the movie we want to count the average of it's rating
+	 * Returns a float number which is the average movie rating of a movie with its parameter 
+	 * being the movie we want to count the average of its rating
 	 * @param movie 
 	 */
-	
 	public float countAverageMovieRating(int movieID) {
 		float movieRating = 0;
 		PreparedStatement ps = null;

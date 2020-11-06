@@ -109,7 +109,7 @@ public class Login {
 						ResultSet rs = ps.executeQuery();
 						
 						if(rs.next()) {
-							MovieList movieList = new MovieList();
+							new MovieList();
 							frame.dispose();
 							
 						}

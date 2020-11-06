@@ -1,5 +1,4 @@
 package user_interface;
-import java.awt.BorderLayout;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -19,13 +18,13 @@ import database.DatabaseService;
 
 public class Login { 
 	
-	static JFrame frame;
+	JFrame frame;
 	
-	public static void main(String[] args) {  
+	public Login(){
 		frame = new JFrame("Centipede Movie Ratings");
 		frame.setSize(500,300);
 		frame.setResizable(false);
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		frame.setLocationRelativeTo(null);
 		
 		JPanel panel1 = new JPanel();
@@ -35,8 +34,7 @@ public class Login {
 	}
 	
 	
-	
-	private static void initialize(JPanel panel1) {
+	private void initialize(JPanel panel1) {
 		DatabaseService ds = new DatabaseService();
 		
 		panel1.setLayout(null);
@@ -128,5 +126,15 @@ public class Login {
 			}
 		});
 		
+		JButton toRegisButton = new JButton("Register");
+		toRegisButton.setBounds(400, 0, 90, 35);
+		panel1.add(toRegisButton);
+		toRegisButton.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent evt) {
+				new Register();
+				frame.dispose();
+			}
+		});
 	}
 }

@@ -15,13 +15,13 @@ import models.User;
 
 public class Register {
 	
-	static JFrame frame;
+	JFrame frame;
 	
-	public static void main(String[] args) {  
+	public Register() {  
 		frame = new JFrame("Centipede Movie Ratings");
 		frame.setSize(500,300);
 		frame.setResizable(false);
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		frame.setLocationRelativeTo(null);
 		
 		JPanel panel1 = new JPanel();
@@ -30,7 +30,7 @@ public class Register {
 		frame.setVisible(true);	
 	}
 	
-	private static void initialize(JPanel panel1) {
+	private void initialize(JPanel panel1) {
 		panel1.setLayout(null);
 		DatabaseService ds = new DatabaseService();
 		
@@ -140,6 +140,17 @@ public class Register {
 					starLabel3.setVisible(false);
 					starLabel4.setVisible(false);
 				}
+			}
+		});
+		
+		JButton toLoginButton = new JButton("Login");
+		toLoginButton.setBounds(400, 0, 90, 35);
+		panel1.add(toLoginButton);
+		toLoginButton.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent evt) {
+				new Login();
+				frame.dispose();
 			}
 		});
 		

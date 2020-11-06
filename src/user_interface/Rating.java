@@ -25,7 +25,7 @@ public class Rating extends JPanel{
 		String[] ratingCol = {"User", "Description", "Rating"};
 		
 		String[][] ratingData = {
-			{"User 1", "A bit boring and i don't reccomend u all to watch this", "2.1"},
+			{"User 1", "A bit boring", "2.1"},
 			{"USer 2","OK","5.0"}
 			};
 		
@@ -57,8 +57,8 @@ public class Rating extends JPanel{
 	    Font fontTitle = new Font("Arial", Font.BOLD,25);
 	    
 	    //Rating label
-	    //JLabel ratinglabel = new JLabel("Rating");
-	    //ratinglabel.setFont(fontTitle);
+	    JLabel ratinglabel = new JLabel("Rating");
+	    ratinglabel.setFont(fontTitle);
 	    
 	    //Movie label
 	    JLabel movielabel = new JLabel("Movie");
@@ -71,24 +71,38 @@ public class Rating extends JPanel{
 	 
 	    
 	    
-	    
+	    //for the Rating title
 	    JPanel panel1 = new JPanel();
 	    panel1.setLayout(new BorderLayout());
+	    panel1.add(ratinglabel,BorderLayout.NORTH);
 	    
-	    
+	    //panel 2 is for the table.
 	    JPanel panel2 = new JPanel();
 	    panel2.setLayout(new BorderLayout());
 	    Rating newRatingList = new Rating();
 	    panel2.add(newRatingList,BorderLayout.SOUTH);
-	    panel1.add(panel2);
+	    //panel1.add(panel2);
 	    
+	    
+	    //panel 3 is for the description, movie name and rating label.
 	    JPanel panel3 = new JPanel();
 	    panel3.setLayout(new GridLayout(0,3));
 	    panel3.add(movielabel);
 	    panel3.add(descriptionlabel);
 	    panel3.add(starlabel);
-	    //panel1.add(ratinglabel,BorderLayout.NORTH);
-	    panel1.add(panel3,BorderLayout.NORTH);
+	    
+
+	    
+	    //panel 4 is to combine the table with the 3 labels.
+	    JPanel panel4 = new JPanel();
+	    panel4.setLayout(new BorderLayout());
+	    panel4.add(panel3,BorderLayout.NORTH);
+	    panel4.add(panel2,BorderLayout.SOUTH);
+	    
+	    panel1.add(panel4,BorderLayout.SOUTH);
+	    
+	    
+	    
 	    
 	    frame.add(panel1);
 	    frame.pack();

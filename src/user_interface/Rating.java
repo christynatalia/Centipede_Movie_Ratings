@@ -1,6 +1,7 @@
 package user_interface;
 
 import java.awt.BorderLayout;
+import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Font;
@@ -14,9 +15,35 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
+import javax.swing.JTextArea;
+import javax.swing.table.TableCellRenderer;
 
 
 public class Rating extends JPanel{
+	
+	
+	public class WordWrapRenderer extends JTextArea implements TableCellRenderer
+	{
+	    WordWrapRenderer()
+	    {
+	        setLineWrap(true);
+	        setWrapStyleWord(true);
+	    }
+
+	    public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column)
+	    {
+	        setText( (value == null) ? "" : value.toString() );
+	        setSize(table.getColumnModel().getColumn(column).getWidth(), table.getRowHeight(row));
+
+	        //  Recalculate the preferred height now that the text and renderer width have been set.
+
+	        int preferredHeight = getPreferredSize().height;
+	        
+	        table.setRowHeight(row, preferredHeight+15);
+
+	        return this;
+	    }
+	}
 	
 	
 	private static final long serialVersionUID = 1L;
@@ -25,8 +52,25 @@ public class Rating extends JPanel{
 		String[] ratingCol = {"User", "Description", "Rating"};
 		
 		String[][] ratingData = {
-			{"User 1", "A bit boring", "2.1"},
-			{"USer 2","OK","5.0"}
+			{"User 1", "A bit boring and i don't recommend this movie", "2.1"},
+			{"User 2","OK","2.5"},
+			{"User 3", "I love this movie","5.0"},
+			{"User 4", "I love this movie","5.0"},
+			{"User 5", "I love this movie","5.0"},
+			{"User 1", "A bit boring and i don't recommend this movie", "2.1"},
+			{"User 2","OK","2.5"},
+			{"User 3", "I love this movie","5.0"},
+			{"User 4", "I love this movie","5.0"},
+			{"User 5", "I love this movie","5.0"},
+			{"User 12", "Don't watch this movie.","0.0"},
+			{"User 1", "A bit boring and i don't recommend this movie", "2.1"},
+			{"User 2","OK","2.5"},
+			{"User 3", "I love this movie","5.0"},
+			{"User 4", "I love this movie","5.0"},
+			{"User 5", "I love this movie","5.0"},
+			{"User 1", "A bit boring and i don't recommend this movie", "2.1"}
+			
+			
 			};
 		
 		
@@ -34,8 +78,11 @@ public class Rating extends JPanel{
 		table.setTableHeader(null);
 		table.setFont(new Font("Arial",Font.PLAIN,16));
 		table.setPreferredScrollableViewportSize(new Dimension(500, 220));
-		table.setRowHeight(30);
 	    table.setFillsViewportHeight(true);
+	    table.getColumnModel().getColumn(1).setCellRenderer(new WordWrapRenderer());
+	    table.setCellSelectionEnabled(false);
+
+	    
 	    
 	  //Create the scroll pane and add the table to it.
 	    JScrollPane scrollPane = new JScrollPane(table);
@@ -44,6 +91,11 @@ public class Rating extends JPanel{
 	    add(scrollPane);
 		
 	}
+	
+	
+
+	
+
 	
 	
 	private static void Initialize() {
@@ -93,17 +145,14 @@ public class Rating extends JPanel{
 	    
 
 	    
-	    //panel 4 is to combine the table with the 3 labels.
+	    //panel 4 is to merge the table with the 3 labels.
 	    JPanel panel4 = new JPanel();
 	    panel4.setLayout(new BorderLayout());
 	    panel4.add(panel3,BorderLayout.NORTH);
 	    panel4.add(panel2,BorderLayout.SOUTH);
 	    
 	    panel1.add(panel4,BorderLayout.SOUTH);
-	    
-	    
-	    
-	    
+	   
 	    frame.add(panel1);
 	    frame.pack();
 	    frame.setSize(500,300);

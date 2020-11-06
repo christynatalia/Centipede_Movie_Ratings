@@ -3,13 +3,9 @@ package user_interface;
 import java.awt.BorderLayout;
 import java.awt.Component;
 import java.awt.Dimension;
-import java.awt.FlowLayout;
-import java.awt.Font;
-import java.awt.Graphics;
-import java.awt.Graphics2D;
-import java.awt.GridLayout;
-import java.awt.geom.Line2D;
 
+import java.awt.Font;
+import java.awt.GridLayout;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -101,7 +97,6 @@ public class Rating extends JPanel{
 	private static void Initialize() {
 		JFrame frame = new JFrame("Centipede Movie Ratings");
 		frame.setResizable(false);
-		
 	    frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	    frame.setLocationRelativeTo(null);
 	    frame.setVisible(true);
@@ -152,7 +147,7 @@ public class Rating extends JPanel{
 	    panel4.add(panel2,BorderLayout.SOUTH);
 	    
 	    panel1.add(panel4,BorderLayout.SOUTH);
-	   
+
 	    frame.add(panel1);
 	    frame.pack();
 	    frame.setSize(500,300);

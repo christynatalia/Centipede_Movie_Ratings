@@ -109,7 +109,8 @@ public class Login {
 						ResultSet rs = ps.executeQuery();
 						
 						if(rs.next()) {
-							new MovieList();
+							MovieList mv = new MovieList();
+							mv.userLabel.setText("Welcome, " + usernameText.getText());
 							frame.dispose();
 							
 						}

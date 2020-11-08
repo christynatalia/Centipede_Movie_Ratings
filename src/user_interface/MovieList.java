@@ -4,12 +4,16 @@ import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.GridLayout;
+import java.util.List;
 
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
+
+import database.DatabaseService;
+import models.Movie;
 
 public class MovieList{
 	
@@ -21,11 +25,35 @@ public class MovieList{
     JLabel ratingLabel = new JLabel("Rating");
     JLabel userLabel = new JLabel("Welcome, User");
     Font fontTitle = new Font("Arial", Font.BOLD, 25);
+    
+    DatabaseService ds = new DatabaseService();
 
 	public MovieList(){
+		int row = 7;
+		int col = 2;
+		
+		List<Movie> mov = ds.getAllMovies();
+		String[][] movies = new String[row][col];
+		
+		for(int i=0; i<row; i++) {
+			Movie m = mov.get(i);
+			movies[i][0] = m.getName();
+			movies[i][1] = "rate me";
+		}
+		
+		/*
+		for(int i = 0; i<row; i++)
+		{
+		    for(int j = 0; j<col; j++)
+		    {
+		        System.out.print(movies[i][j]);
+		    }
+		}
+		*/
 		
 		String[] columnNames = {"Movie Title", "Rating"};
 		
+		/*
 		String[][] data = {
 			{"Movie Name 1", "4.0"},
 			{"Movie Name 2", "4.5"},
@@ -46,9 +74,10 @@ public class MovieList{
 			{"Movie Name 2", "4.5"},
 			{"Movie Name 3", "5.0"}
 		};
+		*/
 		
 		//Initialization table
-		final JTable table = new JTable(data, columnNames);
+		final JTable table = new JTable(movies, columnNames);
 		
 	    //Properties
 	    frame.setResizable(false);

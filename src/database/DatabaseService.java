@@ -478,6 +478,64 @@ public class DatabaseService
 		return users;
 	}
 	/**
+	 * Get the user with the selected username and password;
+	 * @param username
+	 * @param password
+	 * @return a User object. It will return null if no User matches the username and password.
+	 */
+	public User getUser(String username, String password)
+	{
+		User user = null;
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+		
+		try
+		{
+			ps = this.prepStatement("SELECT * FROM " + TABLE_USER 
+									+ " WHERE "
+									+ "username = " + "\'" + username + "\'"
+									+ " AND "
+									+ "password = " + "\'" + password + "\'");
+			rs = ps.executeQuery();
+			
+			rs.next();		//Just get first occurance
+			
+			user = new User(rs.getInt(1),
+							rs.getString(2),
+							rs.getString(3),
+							rs.getString(4),
+							rs.getString(5));
+			
+		}
+		catch(SQLException ex)
+		{
+			System.err.println(ex.getMessage());
+		}
+		finally
+		{
+			if (ps != null)
+			{
+				try
+				{
+					ps.close();
+				}
+				catch(SQLException ex) {}
+			}
+			
+			if (rs != null)
+			{
+				try
+				{
+					rs.close();
+				}
+				catch(SQLException ex) {}
+			}
+		}
+		
+		return user;
+	}
+	
+	/**
 	 * Performs a select * operation on the Review table.
 	 * @return a List containing Review objects
 	 */
@@ -531,7 +589,6 @@ public class DatabaseService
 		
 		return reviews;
 	}
-	
 	
 	/**
 	 * Returns a float number which is the average movie rating of a movie with its parameter 

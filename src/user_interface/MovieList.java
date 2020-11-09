@@ -29,16 +29,22 @@ public class MovieList{
     DatabaseService ds = new DatabaseService();
 
 	public MovieList(){
-		int row = 7;
-		int col = 2;
-		
+		//data for table
 		List<Movie> mov = ds.getAllMovies();
+		
+		int row = mov.size();
+		int col = 3;
+		float movieRating = 0;
+		
 		String[][] movies = new String[row][col];
 		
+		//get data from database and insert into lists
 		for(int i=0; i<row; i++) {
 			Movie m = mov.get(i);
 			movies[i][0] = m.getName();
-			movies[i][1] = "rate me";
+			
+			movieRating = ds.countAverageMovieRating(m.getID());
+			movies[i][1] = String.valueOf(movieRating);
 		}
 		
 		/*
@@ -51,30 +57,7 @@ public class MovieList{
 		}
 		*/
 		
-		String[] columnNames = {"Movie Title", "Rating"};
-		
-		/*
-		String[][] data = {
-			{"Movie Name 1", "4.0"},
-			{"Movie Name 2", "4.5"},
-			{"Movie Name 3", "5.0"},
-			{"Movie Name 1", "4.0"},
-			{"Movie Name 2", "4.5"},
-			{"Movie Name 3", "5.0"},
-			{"Movie Name 1", "4.0"},
-			{"Movie Name 2", "4.5"},
-			{"Movie Name 3", "5.0"},
-			{"Movie Name 1", "4.0"},
-			{"Movie Name 2", "4.5"},
-			{"Movie Name 3", "5.0"},
-			{"Movie Name 1", "4.0"},
-			{"Movie Name 2", "4.5"},
-			{"Movie Name 3", "5.0"},
-			{"Movie Name 1", "4.0"},
-			{"Movie Name 2", "4.5"},
-			{"Movie Name 3", "5.0"}
-		};
-		*/
+		String[] columnNames = {"Movie Title", "Rating", ""};
 		
 		//Initialization table
 		final JTable table = new JTable(movies, columnNames);
@@ -94,6 +77,11 @@ public class MovieList{
 		table.setFont(new Font("Arial",Font.PLAIN,14));
 		table.setPreferredScrollableViewportSize(new Dimension(500, 220));
 	    table.setFillsViewportHeight(true);
+	    table.setRowHeight(20);
+	    table.getColumnModel().getColumn(0).setPreferredWidth(250);
+	    table.getColumnModel().getColumn(1).setPreferredWidth(200);
+	    table.getColumnModel().getColumn(2).setPreferredWidth(50);
+	    
 	    //make JScrollPane
 	    JScrollPane scrollPane = new JScrollPane(table);
 	    

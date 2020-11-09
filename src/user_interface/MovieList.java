@@ -27,40 +27,15 @@ public class MovieList{
     Font fontTitle = new Font("Arial", Font.BOLD, 25);
     
     DatabaseService ds = new DatabaseService();
+    List<Movie> mov = ds.getAllMovies();
+	int row = mov.size();
+	int col = 3;
+	
+	String[][] movies = makeMovieList(row, col, mov);
+	String[] columnNames = {"Movie Title", "Rating", ""};
+	final JTable table = new JTable(movies, columnNames);
 
 	public MovieList(){
-		//data for table
-		List<Movie> mov = ds.getAllMovies();
-		
-		int row = mov.size();
-		int col = 3;
-		float movieRating = 0;
-		
-		String[][] movies = new String[row][col];
-		
-		//get data from database and insert into lists
-		for(int i=0; i<row; i++) {
-			Movie m = mov.get(i);
-			movies[i][0] = m.getName();
-			
-			movieRating = ds.countAverageMovieRating(m.getID());
-			movies[i][1] = String.valueOf(movieRating);
-		}
-		
-		/*
-		for(int i = 0; i<row; i++)
-		{
-		    for(int j = 0; j<col; j++)
-		    {
-		        System.out.print(movies[i][j]);
-		    }
-		}
-		*/
-		
-		String[] columnNames = {"Movie Title", "Rating", ""};
-		
-		//Initialization table
-		final JTable table = new JTable(movies, columnNames);
 		
 	    //Properties
 	    frame.setResizable(false);
@@ -98,6 +73,32 @@ public class MovieList{
 	    frame.pack();
 	    frame.setLocationRelativeTo(null);
 	    frame.setVisible(true);
+	}
+	
+	public String[][] makeMovieList(int row, int col, List<Movie> mov){
+		String[][] movies = new String[row][col];
+		float movieRating = 0;
+		
+		//get data from database and insert into lists
+		for(int i=0; i<row; i++) {
+			Movie m = mov.get(i);
+			movies[i][0] = m.getName();
+			
+			movieRating = ds.countAverageMovieRating(m.getID());
+			movies[i][1] = String.valueOf(movieRating);
+		}
+		
+		/*
+		for(int i = 0; i<row; i++)
+		{
+		    for(int j = 0; j<col; j++)
+		    {
+		        System.out.print(movies[i][j]);
+		    }
+		}
+		*/
+		
+		return movies;
 	}
 	
 	public static void main (String[] args) {

@@ -14,8 +14,11 @@ import javax.swing.JTable;
 import javax.swing.JTextArea;
 import javax.swing.table.TableCellRenderer;
 
+import database.DatabaseService;
+
 
 public class Rating extends JPanel{
+	 DatabaseService ds = new DatabaseService();
 	
 	
 	public class WordWrapRenderer extends JTextArea implements TableCellRenderer

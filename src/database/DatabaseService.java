@@ -16,7 +16,7 @@ public class DatabaseService
 {
 	private static final String HOST = "jdbc:mysql://localhost:3306/",
 								USERNAME = "root",
-								PASSWORD = "";
+								PASSWORD = "christynatalia";
 	public static final String DB_NAME = "CMR",
 								TABLE_MOVIE = "Movie",
 								TABLE_REVIEW = "Review",
@@ -629,16 +629,47 @@ public class DatabaseService
 		return movieRating;
 	}
 	
+	public String getUserReviewName(int userID)
+	{
+		String userName = null;
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+		
+		try {
+			ps = this.prepStatement("SELECT username FROM " + TABLE_USER + " WHERE userID=" + userID);
+			rs = ps.executeQuery();
+			rs.next();
+			userName = rs.getString(1);
+		}
+			
+			catch(SQLException ex)
+			{
+				System.err.println(ex.getMessage());
+			}
+			finally
+			{
+				if (ps != null)
+				{
+					try
+					{
+						ps.close();
+					}
+					catch(SQLException ex) {}
+				}
+			}
+			return userName;
+		}
+	
 	public static void main (String args[])
 	{
 		DatabaseService ds = new DatabaseService();
-//		Movie m = new Movie(1, "Lord of the Rings");
-//		User u = new User(1, "John", "Garret", "sjcoaos", "pass");
-//		Review r = new Review(0, m.getID(), u.getUserID(), "Epic Rohan", 5.0f);
+		//Movie m = new Movie(15, "Lord of the Rings");
+		//User u = new User(3, "John", "Garret", "sjcoaos", "pass");
+		//Review r = new Review(0, m.getID(), u.getUserID(), "Epic Rohan", 5.0f);
 //		
-//		ds.insert(m);
-//		ds.insert(u);
-//		ds.insert(r);
+		//ds.insert(m);
+		//ds.insert(u);
+		//ds.insert(r);
 		
 //		Movie m = new Movie(1, "Lord of the Rings");
 //		User u = new User(1, "Gary", "Garret", "asascdscds", "pass");

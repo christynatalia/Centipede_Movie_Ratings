@@ -95,6 +95,8 @@ public class UserReview {
 		saveButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
+				starlabel.setVisible(false);
+				starlabel2.setVisible(false);
 				if (reviewTextArea.getText().equals("")) {
 					starlabel.setVisible(true);	 
 				}
@@ -115,7 +117,7 @@ public class UserReview {
 		
 		
 		//Current user's review 
-		JLabel curUserReview = new JLabel("Current user's review");
+		JLabel curUserReview = new JLabel("User's review");
 		curUserReview.setHorizontalAlignment(JLabel.LEFT);
 		
 		panel2.add(panel1,BorderLayout.CENTER);

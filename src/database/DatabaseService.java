@@ -1,6 +1,6 @@
 package database;
 
-import java.sql.Connection;
+import java.sql.Connection; 
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -16,7 +16,7 @@ public class DatabaseService
 {
 	private static final String HOST = "jdbc:mysql://localhost:3306/",
 								USERNAME = "root",
-								PASSWORD = "christynatalia";
+								PASSWORD = "";
 	public static final String DB_NAME = "CMR",
 								TABLE_MOVIE = "Movie",
 								TABLE_REVIEW = "Review",

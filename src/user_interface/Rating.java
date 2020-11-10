@@ -97,7 +97,11 @@ public class Rating{
 		table.setFont(new Font("Arial",Font.PLAIN,16));
 		table.setPreferredScrollableViewportSize(new Dimension(500, 220));
 	    table.setFillsViewportHeight(true);
-	    table.getColumnModel().getColumn(1).setCellRenderer(new WordWrapRenderer());
+	    
+	    for (int i = 0 ; i < 3 ; i++) {
+	    table.getColumnModel().getColumn(i).setCellRenderer(new WordWrapRenderer());
+	    }
+	    
 	    
 	    
 	  //Create the scroll pane and add the table to it.
@@ -132,8 +136,7 @@ public class Rating{
 	private String[][] RatingList(int row, int col, List<Review> rev){
 		String[][] Reviews = new String[row][col];
 		float userRating = 0;
-		Connection con = ds.getConnection();
-		PreparedStatement ps;
+	
 		
 		//get data from database and insert into lists
 		for(int i=0; i<row; i++) {
@@ -143,9 +146,7 @@ public class Rating{
 			userRating = r.getUserRating();
 			Reviews[i][2] = String.valueOf(userRating);
 		}
-		return Reviews;
-		
-			
+		return Reviews;	
 		}
 	
 	

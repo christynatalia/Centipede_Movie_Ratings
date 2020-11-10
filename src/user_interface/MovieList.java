@@ -90,10 +90,15 @@ public class MovieList{
 	public void mouseClicked(JTable table1) {
 		table1.getSelectionModel().addListSelectionListener(new ListSelectionListener(){
 	        public void valueChanged(ListSelectionEvent event) {
+	        	String movieNamee = null;
 	        	if (!event.getValueIsAdjusting()) {
 	            // do some actions here, for example
 	            // print first column value from selected row
-	            System.out.println(table1.getValueAt(table1.getSelectedRow(), 0).toString());
+	           movieNamee = table1.getValueAt(table1.getSelectedRow(), 0).toString();
+	           System.out.println(movieNamee);
+	           Rating rt = new Rating();
+	           rt.movielabel.setText(movieNamee);
+	           frame.dispose();
 	        	}
 	        }
 	    });

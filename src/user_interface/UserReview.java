@@ -18,9 +18,17 @@ import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.border.Border;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+
+import database.DatabaseService;
+import models.Review;
+
 public class UserReview {
 	
 	//Initialize the component
+		DatabaseService ds = new DatabaseService();
+	
 		JFrame frame=new JFrame("Centipede Movie Ratings");
 		//panel 1 for the text area and also label
 		JPanel panel1 = new JPanel();
@@ -101,6 +109,9 @@ public class UserReview {
 		panel1.add(rateLabel);
 		panel1.add(rateTextField);
 		panel3.add(saveButton);
+		panel2.add(panel1,BorderLayout.CENTER);
+		panel2.add(panel3,BorderLayout.SOUTH);
+		panel2.add(curUserReview,BorderLayout.NORTH);
 		
 		
 		saveButton.addActionListener(new ActionListener() {
@@ -117,6 +128,10 @@ public class UserReview {
 				}
 				
 				else { 
+				 Connection con = ds.getConnection();
+				 PreparedStatement ps;
+				 
+				 
 				 JOptionPane.showMessageDialog(null, "Data Saved");
 				 starlabel.setVisible(false);
 				 starlabel2.setVisible(false);
@@ -125,21 +140,14 @@ public class UserReview {
 				}
 			}
 		});
-		
-		
-
-		//curUserReview.setHorizontalAlignment(JLabel.LEFT);
-		
-		panel2.add(panel1,BorderLayout.CENTER);
-		panel2.add(panel3,BorderLayout.SOUTH);
-		panel2.add(curUserReview,BorderLayout.NORTH);
-		
-
+	
 
 		frame.add(panel2);
 		frame.setVisible(true);
 
 	}
+	
+
 	public static void main(String[] args) {
 	    //Schedule a job for the event-dispatching thread:
 	    //creating and showing this application's GUI.

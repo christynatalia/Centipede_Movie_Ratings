@@ -4,13 +4,20 @@ import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.GridLayout;
+import java.awt.Point;
+import java.awt.event.MouseEvent;
 import java.util.List;
 
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableModel;
 
 import database.DatabaseService;
 import models.Movie;
@@ -29,11 +36,17 @@ public class MovieList{
     DatabaseService ds = new DatabaseService();
     List<Movie> mov = ds.getAllMovies();
 	int row = mov.size();
-	int col = 3;
+	int col = 2;
 	
 	String[][] movies = makeMovieList(row, col, mov);
-	String[] columnNames = {"Movie Title", "Rating", ""};
-	final JTable table = new JTable(movies, columnNames);
+	String[] columnNames = {"Movie Title", "Rating"};
+	
+	private TableModel model = new DefaultTableModel(movies, columnNames){
+		public boolean isCellEditable(int row, int column){
+			return false;//This causes all cells to be not editable
+		}
+	};
+	final JTable table = new JTable(model);
 
 	public MovieList(){
 		
@@ -53,9 +66,8 @@ public class MovieList{
 		table.setPreferredScrollableViewportSize(new Dimension(500, 220));
 	    table.setFillsViewportHeight(true);
 	    table.setRowHeight(20);
-	    table.getColumnModel().getColumn(0).setPreferredWidth(250);
-	    table.getColumnModel().getColumn(1).setPreferredWidth(200);
-	    table.getColumnModel().getColumn(2).setPreferredWidth(50);
+	    
+	    mouseClicked(table);
 	    
 	    //make JScrollPane
 	    JScrollPane scrollPane = new JScrollPane(table);
@@ -75,7 +87,19 @@ public class MovieList{
 	    frame.setVisible(true);
 	}
 	
-	public String[][] makeMovieList(int row, int col, List<Movie> mov){
+	public void mouseClicked(JTable table1) {
+		table1.getSelectionModel().addListSelectionListener(new ListSelectionListener(){
+	        public void valueChanged(ListSelectionEvent event) {
+	        	if (!event.getValueIsAdjusting()) {
+	            // do some actions here, for example
+	            // print first column value from selected row
+	            System.out.println(table1.getValueAt(table1.getSelectedRow(), 0).toString());
+	        	}
+	        }
+	    });
+    }
+	
+	private String[][] makeMovieList(int row, int col, List<Movie> mov){
 		String[][] movies = new String[row][col];
 		float movieRating = 0;
 		

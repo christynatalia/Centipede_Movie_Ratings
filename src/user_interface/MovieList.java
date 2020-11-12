@@ -1,6 +1,6 @@
 package user_interface;
 
-import java.awt.BorderLayout;
+import java.awt.BorderLayout; 
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.GridLayout;
@@ -32,11 +32,13 @@ public class MovieList{
     JLabel ratingLabel = new JLabel("Rating");
     JLabel userLabel = new JLabel("Welcome, User");
     Font fontTitle = new Font("Arial", Font.BOLD, 25);
+    public static String movieNamee = null;
     
     DatabaseService ds = new DatabaseService();
     List<Movie> mov = ds.getAllMovies();
 	int row = mov.size();
 	int col = 2;
+	
 	
 	String[][] movies = makeMovieList(row, col, mov);
 	String[] columnNames = {"Movie Title", "Rating"};
@@ -90,7 +92,6 @@ public class MovieList{
 	public void mouseClicked(JTable table1) {
 		table1.getSelectionModel().addListSelectionListener(new ListSelectionListener(){
 	        public void valueChanged(ListSelectionEvent event) {
-	        	String movieNamee = null;
 	        	if (!event.getValueIsAdjusting()) {
 	            // do some actions here, for example
 	            // print first column value from selected row
@@ -112,7 +113,6 @@ public class MovieList{
 		for(int i=0; i<row; i++) {
 			Movie m = mov.get(i);
 			movies[i][0] = m.getName();
-			
 			movieRating = ds.countAverageMovieRating(m.getID());
 			movies[i][1] = String.valueOf(movieRating);
 		}

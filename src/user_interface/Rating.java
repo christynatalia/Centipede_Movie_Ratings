@@ -9,6 +9,7 @@ import java.awt.Font;
 import java.awt.GridLayout;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
 
@@ -32,7 +33,10 @@ public class Rating{
 	 //initialization
 	 JFrame frame = new JFrame("Centipede Movie Ratings");
 	 JLabel ratinglabel = new JLabel("Rating");
-	 JLabel movielabel = new JLabel("Movie");
+	 
+	 MovieList ml = new MovieList();
+	 String moviename = ml.movieNamee;
+	 JLabel movielabel = new JLabel(moviename);
 	 JLabel descriptionlabel = new JLabel("Description");
 	 JLabel starlabel = new JLabel("Rating");
 	 Font fontTitle = new Font("Arial", Font.BOLD,25);
@@ -136,6 +140,12 @@ public class Rating{
 	private String[][] RatingList(int row, int col, List<Review> rev){
 		String[][] Reviews = new String[row][col];
 		float userRating = 0;
+		int movieID = 0;
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+		System.out.println("global" + movielabel.getText());
+		
+		String moviesname = movielabel.getText();
 	
 		
 		//get data from database and insert into lists

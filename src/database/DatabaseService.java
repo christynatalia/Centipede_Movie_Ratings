@@ -16,7 +16,7 @@ public class DatabaseService
 {
 	private static final String HOST = "jdbc:mysql://localhost:3306/",
 								USERNAME = "root",
-								PASSWORD = "";
+								PASSWORD = "christynatalia";
 	public static final String DB_NAME = "CMR",
 								TABLE_MOVIE = "Movie",
 								TABLE_REVIEW = "Review",
@@ -629,6 +629,10 @@ public class DatabaseService
 		return movieRating;
 	}
 	
+	
+	
+	
+	
 	public String getUserReviewName(int userID)
 	{
 		String userName = null;
@@ -636,7 +640,7 @@ public class DatabaseService
 		ResultSet rs = null;
 		
 		try {
-			ps = this.prepStatement("SELECT username FROM " + TABLE_USER + " WHERE userID=" + userID);
+			ps = this.prepStatement("SELECT username FROM " + TABLE_USER + " WHERE User.userID=" + userID );
 			rs = ps.executeQuery();
 			rs.next();
 			userName = rs.getString(1);
@@ -670,6 +674,7 @@ public class DatabaseService
 		//ds.insert(m);
 		//ds.insert(u);
 		//ds.insert(r);
+		ds.getMovieID("Mickey");
 		
 //		Movie m = new Movie(1, "Lord of the Rings");
 //		User u = new User(1, "Gary", "Garret", "asascdscds", "pass");

@@ -143,7 +143,7 @@ public class Rating{
 		int movieID = 0;
 		PreparedStatement ps = null;
 		ResultSet rs = null;
-		System.out.println("global" + movielabel.getText());
+		
 		
 		String moviesname = movielabel.getText();
 	

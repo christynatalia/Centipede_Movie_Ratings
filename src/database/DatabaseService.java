@@ -629,6 +629,30 @@ public class DatabaseService
 		return movieRating;
 	}
 	
+	public int getMovieID1(String moviename1)
+	{
+		int movieid1 = 0;
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+		
+		ps = this.prepStatement("SELECT movieID FROM Movie WHERE movieName=?");
+		
+		try
+		{
+			ps.setString(1, moviename1);
+			rs = ps.executeQuery();
+			if (rs.next())
+			{
+				movieid1 = rs.getInt(1);
+			}
+		}
+			catch(SQLException ex)
+			{
+				System.err.println(ex.getMessage());
+			}
+		return movieid1;
+	}
+	
 	
 	
 	
@@ -674,8 +698,8 @@ public class DatabaseService
 		//ds.insert(m);
 		//ds.insert(u);
 		//ds.insert(r);
-		ds.getMovieID("Mickey");
 		
+		System.out.println(ds.getMovieID1("Avengers"));
 //		Movie m = new Movie(1, "Lord of the Rings");
 //		User u = new User(1, "Gary", "Garret", "asascdscds", "pass");
 //		User u1 = new User(2, "Bruhyan", "Ultra", "bryan150929", "bruh");

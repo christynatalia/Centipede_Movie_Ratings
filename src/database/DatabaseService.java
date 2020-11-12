@@ -629,9 +629,9 @@ public class DatabaseService
 		return movieRating;
 	}
 	
-	public int getMovieID1(String moviename1)
+	/*public int getMovieID1(String moviename1)
 	{
-		int movieid1 = 0;
+		
 		PreparedStatement ps = null;
 		ResultSet rs = null;
 		
@@ -652,6 +652,98 @@ public class DatabaseService
 			}
 		return movieid1;
 	}
+	*/
+	
+	
+	public List<Review> getSelectedReviews(String moviename1)
+	{
+		int movieid1 = 0;
+		List<Review> reviews = new ArrayList<Review>();
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+		
+		ps = this.prepStatement("SELECT movieID FROM Movie WHERE movieName=?");
+		
+		try
+		{
+			ps.setString(1, moviename1);
+			rs = ps.executeQuery();
+			if (rs.next())
+			{
+				movieid1 = rs.getInt(1);
+				ps = this.prepStatement("SELECT * FROM Review WHERE movieID=?");
+				
+				try 
+				{
+					ps.setInt(1, movieid1);
+					rs = ps.executeQuery();
+				
+				while (rs.next())
+					{
+				Review review = new Review(rs.getInt(1),
+											rs.getInt(2),
+											rs.getInt(3),
+											rs.getString(4),
+											rs.getFloat(5));
+				reviews.add(review);
+					}
+				}
+				catch(SQLException ex)
+				{
+					System.err.println(ex.getMessage());
+				}
+				finally
+				{
+					if (ps != null)
+					{
+						try
+						{
+							ps.close();
+						}
+						catch(SQLException ex) {}
+					}
+					
+					if (rs != null)
+					{
+						try
+						{
+							rs.close();
+						}
+						catch(SQLException ex) {}
+					}
+				}
+			}
+		}
+			
+		catch(SQLException ex)
+		{
+			System.err.println(ex.getMessage());
+		}
+		finally
+		{
+			if (ps != null)
+			{
+				try
+				{
+					ps.close();
+				}
+				catch(SQLException ex) {}
+			}
+			
+			if (rs != null)
+			{
+				try
+				{
+					rs.close();
+				}
+				catch(SQLException ex) {}
+			}
+		}
+		
+		return reviews;
+	}
+	
+	
 	
 	
 	
@@ -699,7 +791,8 @@ public class DatabaseService
 		//ds.insert(u);
 		//ds.insert(r);
 		
-		System.out.println(ds.getMovieID1("Avengers"));
+		//System.out.println(ds.getSelectedReviews("Avengers"));
+
 //		Movie m = new Movie(1, "Lord of the Rings");
 //		User u = new User(1, "Gary", "Garret", "asascdscds", "pass");
 //		User u1 = new User(2, "Bruhyan", "Ultra", "bryan150929", "bruh");

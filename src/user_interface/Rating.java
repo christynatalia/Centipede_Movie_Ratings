@@ -51,7 +51,7 @@ public class Rating{
 	 JPanel panel4 = new JPanel();
 	 
 	 DatabaseService ds = new DatabaseService();
-	 List<Review> rev = ds.getAllReviews();
+	 List<Review> rev = ds.getSelectedReviews(moviename);
 	 int row = rev.size();
 	 int col = 3;
 	

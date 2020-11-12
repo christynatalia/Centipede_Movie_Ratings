@@ -18,9 +18,11 @@ import database.DatabaseService;
 
 public class Login { 
 	
+	public static String usernameLogin = null;
 	JFrame frame;
 	
 	public Login(){
+		
 		frame = new JFrame("Centipede Movie Ratings");
 		frame.setSize(500,300);
 		frame.setResizable(false);
@@ -109,9 +111,11 @@ public class Login {
 						ResultSet rs = ps.executeQuery();
 						
 						if(rs.next()) {
+						
 							MovieList mv = new MovieList();
 							mv.userLabel.setText("Welcome, " + usernameText.getText());
 							frame.dispose();
+							
 							
 						}
 						else {
@@ -129,6 +133,8 @@ public class Login {
 		
 		JButton toRegisButton = new JButton("Register");
 		toRegisButton.setBounds(400, 0, 90, 35);
+		
+		
 		panel1.add(toRegisButton);
 		toRegisButton.addActionListener(new ActionListener() {
 			@Override

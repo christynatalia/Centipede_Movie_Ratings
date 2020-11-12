@@ -23,11 +23,20 @@ import java.sql.PreparedStatement;
 
 import database.DatabaseService;
 import models.Review;
+import models.User;
 
 public class UserReview {
 	
 	//Initialize the component
 		DatabaseService ds = new DatabaseService();
+		
+		//variable from another class
+		Login lg = new Login();
+		JFrame framelogin = lg.frame;
+		String usernameReview = lg.usernameLogin;
+		MovieList ml = new MovieList();
+		 JFrame frameMovieList = ml.frame;
+		 String moviename = ml.movieNamee;
 	
 		JFrame frame=new JFrame("Centipede Movie Ratings");
 		//panel 1 for the text area and also label
@@ -48,7 +57,7 @@ public class UserReview {
 		
 		//Save Button 
 		JButton saveButton = new JButton("Save");
-		
+	
 		
 		//Rate Text Field
 		JTextField rateTextField = new JTextField();
@@ -63,6 +72,10 @@ public class UserReview {
 
 
 	public UserReview() {
+		
+		//close another frame
+		framelogin.setVisible(false);
+		frameMovieList.setVisible(false);
 		
 		frame.setSize(500,300);
 		frame.setResizable(false);
@@ -130,6 +143,9 @@ public class UserReview {
 				else { 
 				 Connection con = ds.getConnection();
 				 PreparedStatement ps;
+				
+				 
+				
 				 
 				 
 				 JOptionPane.showMessageDialog(null, "Data Saved");

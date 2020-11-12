@@ -28,17 +28,23 @@ import models.Movie;
 import models.Review;
 
 
-public class Rating{
+public class Rating {
 	 
 	 //initialization
+	DatabaseService ds = new DatabaseService();
 	 JFrame frame = new JFrame("Centipede Movie Ratings");
-	 JLabel ratinglabel = new JLabel("Rating");
 	 
+	
 	 MovieList ml = new MovieList();
+	 JFrame frameMovieList = ml.frame;
 	 String moviename = ml.movieNamee;
+	 float movrating = ds.countAverageMovieRating(ds.getMovieID1(moviename));
+	 
+	 
+	 JLabel ratinglabel = new JLabel("Rating");
 	 JLabel movielabel = new JLabel(moviename);
 	 JLabel descriptionlabel = new JLabel("Description");
-	 JLabel starlabel = new JLabel("Rating");
+	 JLabel starlabel = new JLabel(String.valueOf(movrating));
 	 Font fontTitle = new Font("Arial", Font.BOLD,25);
 	 
 	//for the Rating title
@@ -50,7 +56,7 @@ public class Rating{
 	//panel 4 is to merge the table with the 3 labels.
 	 JPanel panel4 = new JPanel();
 	 
-	 DatabaseService ds = new DatabaseService();
+	 
 	 List<Review> rev = ds.getSelectedReviews(moviename);
 	 int row = rev.size();
 	 int col = 3;
@@ -91,9 +97,12 @@ public class Rating{
 
 	public Rating() {
 		
+		 //close another frame 
+	    frameMovieList.dispose();
+		
 		
 		frame.setResizable(false);
-	    frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+	    //frame.setDefaultCloseOperation;
 	    frame.setLocationRelativeTo(null);
 	    frame.setVisible(true);
 		
@@ -106,7 +115,7 @@ public class Rating{
 	    table.getColumnModel().getColumn(i).setCellRenderer(new WordWrapRenderer());
 	    }
 	    
-	    
+	   
 	    
 	  //Create the scroll pane and add the table to it.
 	    JScrollPane scrollPane = new JScrollPane(table);
@@ -160,7 +169,7 @@ public class Rating{
 		}
 	
 	
-	public static void main(String[] args) {
+	/*public static void main(String[] args) {
 		new Rating();
-	}
+	} */
 }

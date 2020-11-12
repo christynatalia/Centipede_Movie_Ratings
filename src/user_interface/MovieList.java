@@ -130,8 +130,6 @@ public class MovieList{
 		return movies;
 	}
 	
-	public static void main (String[] args) {
-		new MovieList();
-	}
+	
 }
 

@@ -629,9 +629,9 @@ public class DatabaseService
 		return movieRating;
 	}
 	
-	/*public int getMovieID1(String moviename1)
+	public int getMovieID1(String moviename1)
 	{
-		
+		int movieid1 = 0;
 		PreparedStatement ps = null;
 		ResultSet rs = null;
 		
@@ -652,8 +652,6 @@ public class DatabaseService
 			}
 		return movieid1;
 	}
-	*/
-	
 	
 	public List<Review> getSelectedReviews(String moviename1)
 	{
@@ -742,10 +740,6 @@ public class DatabaseService
 		
 		return reviews;
 	}
-	
-	
-	
-	
 	
 	
 	

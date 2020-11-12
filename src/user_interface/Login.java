@@ -16,79 +16,90 @@ import javax.swing.JTextField;
 
 import database.DatabaseService;
 
-public class Login { 
+public class Login {
+	
+	//initialize
+	DatabaseService ds = new DatabaseService();
 	
 	public static String usernameLogin = null;
-	JFrame frame;
+	JFrame frame = new JFrame("Centipede Movie Ratings");
+	Font fontTitle = new Font("Arial", Font.BOLD,40);
+	Font font1 = new Font("Arial",Font.PLAIN,18);
+	
+	JPanel panel1 = new JPanel();
+	
+	JLabel loginLabel = new JLabel("Login");
+	JLabel usernameLabel = new JLabel("username");
+	JLabel passwordLabel = new JLabel("password");
+	JLabel starLabel = new JLabel("*");
+	JLabel starLabel2 = new JLabel("*");
+	
+	JButton loginButton = new JButton("Login");
+	JButton toRegisButton = new JButton("Register");
+	
+	JTextField passwordText = new JTextField();
+	JTextField usernameText = new JTextField();
+	
 	
 	public Login(){
 		
-		frame = new JFrame("Centipede Movie Ratings");
+		
 		frame.setSize(500,300);
 		frame.setResizable(false);
 		frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		frame.setLocationRelativeTo(null);
 		
-		JPanel panel1 = new JPanel();
+
 		frame.add(panel1);
-		initialize(panel1);
 		frame.setVisible(true);	
-	}
 	
-	
-	private void initialize(JPanel panel1) {
-		DatabaseService ds = new DatabaseService();
+		
 		
 		panel1.setLayout(null);
 		
-		Font fontTitle = new Font("Arial", Font.BOLD,40);
-		Font font1 = new Font("Arial",Font.PLAIN,18);
+	
 
-		// create the login label
-		JLabel loginLabel = new JLabel("Login");
+		//set the location
+		
 		loginLabel.setBounds(20, 5, 400, 50);
-		loginLabel.setFont(fontTitle);
-		panel1.add(loginLabel);
-		
-		// create the username label
-		JLabel usernameLabel = new JLabel("username");
 		usernameLabel.setBounds(20, 70, 150, 20);
-		usernameLabel.setFont(font1);
-		panel1.add(usernameLabel);
-		
-		//create the password label 
-		JLabel passwordLabel = new JLabel("password");
 		passwordLabel.setBounds(20, 100, 150, 20);
-		passwordLabel.setFont(font1);
-		panel1.add(passwordLabel);
-		
-		//create the username textfield
-		JTextField usernameText = new JTextField();
 		usernameText.setBounds(200, 70, 200, 20);
-		panel1.add(usernameText);
-		
-		//create the password textfield
-		JTextField passwordText = new JTextField();
 		passwordText.setBounds(200, 100, 200, 20);
-		panel1.add(passwordText);
-		
-		//create * labels to inform the user that they haven't filled a textfield yet
-		JLabel starLabel = new JLabel("*");
-		JLabel starLabel2 = new JLabel("*");
 		starLabel.setBounds(400, 60, 20, 20);
 		starLabel2.setBounds(400, 90, 20, 20);
+		loginButton.setBounds(337, 214, 150, 50);
+		toRegisButton.setBounds(400, 0, 90, 35);
+		
+		//set the font
+		loginLabel.setFont(fontTitle);
+		usernameLabel.setFont(font1);
+		passwordLabel.setFont(font1);
 		starLabel.setFont(font1);
 		starLabel2.setFont(font1);
-		starLabel.setForeground(new java.awt.Color(255, 51, 51));
-		starLabel2.setForeground(new java.awt.Color(255, 51, 51));
+		
+		
+		panel1.add(loginLabel);
+		panel1.add(usernameLabel);
+		panel1.add(passwordLabel);
+		panel1.add(usernameText);
+		panel1.add(passwordText);
 		panel1.add(starLabel);
 		panel1.add(starLabel2);
+		panel1.add(loginButton);
+
+		
+	
+		//for the color
+		starLabel.setForeground(new java.awt.Color(255, 51, 51));
+		starLabel2.setForeground(new java.awt.Color(255, 51, 51));
+		
+		//set the visible
 		starLabel.setVisible(false);
 		starLabel2.setVisible(false);
 		
-		//create the login button
-		JButton loginButton = new JButton("Login");
-		loginButton.setBounds(337, 214, 150, 50);
+		
+		
 		panel1.add(loginButton);
 		loginButton.addActionListener(new ActionListener() {
 			@Override
@@ -111,7 +122,7 @@ public class Login {
 						ResultSet rs = ps.executeQuery();
 						
 						if(rs.next()) {
-						
+							usernameLogin = usernameText.getText();
 							MovieList mv = new MovieList();
 							mv.userLabel.setText("Welcome, " + usernameText.getText());
 							frame.dispose();
@@ -131,8 +142,8 @@ public class Login {
 			}
 		});
 		
-		JButton toRegisButton = new JButton("Register");
-		toRegisButton.setBounds(400, 0, 90, 35);
+		
+		
 		
 		
 		panel1.add(toRegisButton);

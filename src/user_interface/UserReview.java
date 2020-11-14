@@ -8,6 +8,7 @@ import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import javax.swing.Action;
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -57,6 +58,7 @@ public class UserReview {
 		
 		//Save Button 
 		JButton saveButton = new JButton("Save");
+		JButton backButton = new JButton("Back");
 	
 		
 		//Rate Text Field
@@ -95,6 +97,7 @@ public class UserReview {
 		starlabel2.setForeground(new Color(255,51,51));
 		
 		saveButton.setPreferredSize(new Dimension(100,30));
+		backButton.setPreferredSize(new Dimension(100,30));
 		
 		reviewLabel.setBounds(20,20, 150, 20);
 		starlabel.setBounds(90,20,20,20);
@@ -102,6 +105,8 @@ public class UserReview {
 		reviewTextArea.setBounds(20,50,250,100);
 		rateLabel.setBounds(360, 20, 150, 20);
 		rateTextField.setBounds(360,50,100,60);
+		
+		
 		
 		reviewTextArea.setBorder(borderBlack);
 		reviewTextArea.setBorder(BorderFactory.createCompoundBorder(borderBlack,
@@ -122,6 +127,7 @@ public class UserReview {
 		panel1.add(rateLabel);
 		panel1.add(rateTextField);
 		panel3.add(saveButton);
+		panel3.add(backButton);
 		panel2.add(panel1,BorderLayout.CENTER);
 		panel2.add(panel3,BorderLayout.SOUTH);
 		panel2.add(curUserReview,BorderLayout.NORTH);
@@ -130,30 +136,40 @@ public class UserReview {
 		saveButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
+				int movieID1 = 0;
+				movieID1 = ds.getMovieID1(moviename);
+				
 				starlabel.setVisible(false);
 				starlabel2.setVisible(false);
 				if (reviewTextArea.getText().equals("")) {
 					starlabel.setVisible(true);	 
 				}
 				else if (rateTextField.getText().equals("")) {
-
 					starlabel2.setVisible(true);
 				}
 				
 				else { 
 				 Connection con = ds.getConnection();
 				 PreparedStatement ps;
-				
 				 
-				
-				 
-				 
+				 ds.insert(new Review(0,movieID1,1,reviewTextArea.getText(),1.7f));
+		
 				 JOptionPane.showMessageDialog(null, "Data Saved");
 				 starlabel.setVisible(false);
 				 starlabel2.setVisible(false);
 				 reviewTextArea.setText("");
 				 rateTextField.setText("");
 				}
+			}
+		});
+		
+		backButton.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				Rating rat = new Rating();
+				rat.movielabel.setText(moviename);
+				frame.dispose();
+				
 			}
 		});
 	

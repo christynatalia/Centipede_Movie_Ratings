@@ -87,6 +87,7 @@ public class Login {
 		panel1.add(starLabel);
 		panel1.add(starLabel2);
 		panel1.add(loginButton);
+		panel1.add(toRegisButton);
 
 		
 	
@@ -146,7 +147,7 @@ public class Login {
 		
 		
 		
-		panel1.add(toRegisButton);
+		
 		toRegisButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent evt) {

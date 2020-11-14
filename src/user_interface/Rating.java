@@ -4,15 +4,18 @@ import java.awt.BorderLayout;
 
 import java.awt.Component;
 import java.awt.Dimension;
-
+import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.GridLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
 
+import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -40,7 +43,8 @@ public class Rating {
 	 String moviename = ml.movieNamee;
 	 float movrating = ds.countAverageMovieRating(ds.getMovieID1(moviename));
 	 
-	 
+	 JButton addReview = new JButton("Add New Review");
+	 JButton backButton = new JButton("Back");
 	 JLabel ratinglabel = new JLabel("Rating");
 	 JLabel movielabel = new JLabel(moviename);
 	 JLabel descriptionlabel = new JLabel("Description");
@@ -55,6 +59,8 @@ public class Rating {
 	 JPanel panel3 = new JPanel();
 	//panel 4 is to merge the table with the 3 labels.
 	 JPanel panel4 = new JPanel();
+	 
+	 JPanel panel5 = new JPanel();
 	 
 	 
 	 List<Review> rev = ds.getSelectedReviews(moviename);
@@ -126,10 +132,13 @@ public class Rating {
 	    panel2.setLayout(new BorderLayout());
 	    panel3.setLayout(new GridLayout(0,3));
 	    panel4.setLayout(new BorderLayout());
+	    panel5.setLayout(new FlowLayout(FlowLayout.RIGHT));
 	    
 	    
-	   
+	    panel5.add(addReview);
+	   	panel5.add(backButton);
 	    panel2.add(scrollPane,BorderLayout.CENTER);
+	    panel2.add(panel5,BorderLayout.SOUTH);
 	    panel1.add(ratinglabel,BorderLayout.NORTH);
 	    panel3.add(movielabel);
 	    panel3.add(descriptionlabel);
@@ -143,20 +152,32 @@ public class Rating {
 	    frame.pack();
 	    frame.setSize(500,300);
 	    frame.setVisible(true);
+	    
+	    addReview.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent evt) {
+				new UserReview();
+				frame.dispose();
+				
+			}
+	    });
+	    
+	    backButton.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent evt) {
+				new MovieList();
+				frame.dispose();
+				
+			}
+	    });
 		
 	}
 	
 	private String[][] RatingList(int row, int col, List<Review> rev){
 		String[][] Reviews = new String[row][col];
 		float userRating = 0;
-		int movieID = 0;
-		PreparedStatement ps = null;
-		ResultSet rs = null;
 		
-		
-		String moviesname = movielabel.getText();
 	
-		
 		//get data from database and insert into lists
 		for(int i=0; i<row; i++) {
 			Review r = rev.get(i);
@@ -169,7 +190,7 @@ public class Rating {
 		}
 	
 	
-	/*public static void main(String[] args) {
+	public static void main(String[] args) {
 		new Rating();
-	} */
+	} 
 }

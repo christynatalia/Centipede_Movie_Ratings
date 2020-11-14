@@ -41,6 +41,11 @@ public class Rating {
 	 MovieList ml = new MovieList();
 	 JFrame frameMovieList = ml.frame;
 	 String moviename = ml.movieNamee;
+	 
+	 Login lg = new Login();
+	 JFrame frameLogin = lg.frame;
+	 String usernameReview = lg.usernameLogin;
+		
 	 float movrating = ds.countAverageMovieRating(ds.getMovieID1(moviename));
 	 
 	 JButton addReview = new JButton("Add New Review");
@@ -105,6 +110,7 @@ public class Rating {
 		
 		 //close another frame 
 	    frameMovieList.dispose();
+	    frameLogin.dispose();
 		
 		
 		frame.setResizable(false);
@@ -165,7 +171,8 @@ public class Rating {
 	    backButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent evt) {
-				new MovieList();
+				MovieList ml = new MovieList();
+				ml.userLabel.setText("Welcome," + usernameReview );
 				frame.dispose();
 				
 			}

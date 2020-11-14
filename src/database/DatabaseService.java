@@ -653,6 +653,32 @@ public class DatabaseService
 		return movieid1;
 	}
 	
+	public int getUserID(String username)
+	{
+		int userid = 0;
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+		
+		ps = this.prepStatement("SELECT userID FROM User WHERE username=?");
+		
+		try
+		{
+			ps.setString(1, username);
+			rs = ps.executeQuery();
+			if (rs.next())
+			{
+				userid = rs.getInt(1);
+			}
+		}
+			catch(SQLException ex)
+			{
+				System.err.println(ex.getMessage());
+			}
+		return userid;
+	}
+	
+	
+	
 	public List<Review> getSelectedReviews(String moviename1)
 	{
 		int movieid1 = 0;

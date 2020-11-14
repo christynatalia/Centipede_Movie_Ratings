@@ -35,9 +35,10 @@ public class UserReview {
 		Login lg = new Login();
 		JFrame framelogin = lg.frame;
 		String usernameReview = lg.usernameLogin;
+		
 		MovieList ml = new MovieList();
-		 JFrame frameMovieList = ml.frame;
-		 String moviename = ml.movieNamee;
+		JFrame frameMovieList = ml.frame;
+		String moviename = ml.movieNamee;
 	
 		JFrame frame=new JFrame("Centipede Movie Ratings");
 		//panel 1 for the text area and also label
@@ -107,7 +108,7 @@ public class UserReview {
 		rateTextField.setBounds(360,50,100,60);
 		
 		
-		
+		reviewTextArea.setLineWrap(true);
 		reviewTextArea.setBorder(borderBlack);
 		reviewTextArea.setBorder(BorderFactory.createCompoundBorder(borderBlack,
 	            BorderFactory.createEmptyBorder(10, 10, 10, 10)));
@@ -149,16 +150,17 @@ public class UserReview {
 				}
 				
 				else { 
-				 Connection con = ds.getConnection();
-				 PreparedStatement ps;
-				 
-				 ds.insert(new Review(0,movieID1,1,reviewTextArea.getText(),1.7f));
-		
-				 JOptionPane.showMessageDialog(null, "Data Saved");
-				 starlabel.setVisible(false);
-				 starlabel2.setVisible(false);
-				 reviewTextArea.setText("");
-				 rateTextField.setText("");
+					double rateStar = Double.parseDouble(rateTextField.getText());
+					float ratingUser = (float)rateStar;
+					System.out.println(usernameReview);
+					int userid = ds.getUserID(usernameReview);
+					
+					ds.insert(new Review(0,movieID1,userid,reviewTextArea.getText(),ratingUser));
+					JOptionPane.showMessageDialog(null, "Data Saved");
+					starlabel.setVisible(false);
+					starlabel2.setVisible(false);
+					reviewTextArea.setText("");
+					rateTextField.setText("");
 				}
 			}
 		});

@@ -139,6 +139,9 @@ public class UserReview {
 			public void actionPerformed(ActionEvent arg0) {
 				int movieID1 = 0;
 				movieID1 = ds.getMovieID1(moviename);
+				double rateStar = Double.parseDouble(rateTextField.getText());
+				float ratingUser = (float)rateStar;
+				int userid = ds.getUserID(usernameReview);
 				
 				starlabel.setVisible(false);
 				starlabel2.setVisible(false);
@@ -150,17 +153,20 @@ public class UserReview {
 				}
 				
 				else { 
-					double rateStar = Double.parseDouble(rateTextField.getText());
-					float ratingUser = (float)rateStar;
-					System.out.println(usernameReview);
-					int userid = ds.getUserID(usernameReview);
 					
+					if (ratingUser >= 0.0 & ratingUser <= 5.0)
+					{
 					ds.insert(new Review(0,movieID1,userid,reviewTextArea.getText(),ratingUser));
 					JOptionPane.showMessageDialog(null, "Data Saved");
 					starlabel.setVisible(false);
 					starlabel2.setVisible(false);
 					reviewTextArea.setText("");
 					rateTextField.setText("");
+					}
+					else
+					{
+					JOptionPane.showMessageDialog(null, "Can't save the data. Please try again!");
+					}
 				}
 			}
 		});

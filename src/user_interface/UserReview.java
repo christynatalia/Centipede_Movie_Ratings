@@ -8,6 +8,7 @@ import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.BorderFactory;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -41,6 +42,9 @@ public class UserReview {
 		JPanel panel2 = new JPanel();
 		//panel for the save button 
 		JPanel panel3 = new JPanel();
+		
+		ImageIcon icon = createImageIcon("/assets/starIcon.png", "star icon");
+		
 		//Review label
 		JLabel reviewLabel = new JLabel("Review");
 		//Rate label
@@ -50,6 +54,7 @@ public class UserReview {
 		JLabel starlabel2 = new JLabel("*");
 		//Current user's review 
 		JLabel curUserReview = new JLabel("User's review");
+		JLabel starIcon = new JLabel(icon);
 		
 		//Save Button 
 		JButton saveButton = new JButton("Save");
@@ -120,9 +125,6 @@ public class UserReview {
 		starlabel2.setVisible(false);
 		
 		
-		
-		
-		
 		panel1.add(starlabel);	
 		panel1.add(starlabel2);
 		panel1.add(reviewLabel);
@@ -190,7 +192,15 @@ public class UserReview {
 
 	}
 	
-
+	private ImageIcon createImageIcon(String path, String description) {
+		java.net.URL imgURL = getClass().getResource(path);
+		if (imgURL != null) {
+			return new ImageIcon(imgURL, description);
+		} else {
+			System.err.println("Couldn't find file: " + path);
+			return null;
+		}
+	}
 
 	public static void main(String[] args) {
 	    //Schedule a job for the event-dispatching thread:

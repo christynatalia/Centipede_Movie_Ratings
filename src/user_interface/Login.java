@@ -125,7 +125,7 @@ public class Login {
 						if(rs.next()) {
 							usernameLogin = usernameText.getText();
 							MovieList mv = new MovieList();
-							mv.userLabel.setText("Welcome, " + usernameText.getText());
+							mv.userLabel.setText("Welcome,  " + usernameText.getText());
 							frame.dispose();
 							
 							

@@ -53,7 +53,7 @@ public class UserReview {
 		JLabel starlabel = new JLabel("*");
 		JLabel starlabel2 = new JLabel("*");
 		//Current user's review 
-		JLabel curUserReview = new JLabel("User's review");
+		JLabel curUserReview = new JLabel(usernameReview + "'s review");
 		JLabel starIcon = new JLabel(icon);
 		
 		//Save Button 

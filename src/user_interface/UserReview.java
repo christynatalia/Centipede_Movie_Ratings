@@ -1,14 +1,12 @@
 package user_interface;
 
-import java.awt.BorderLayout;
+import java.awt.BorderLayout; 
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-
-import javax.swing.Action;
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -18,13 +16,9 @@ import javax.swing.JPanel;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.border.Border;
-
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-
 import database.DatabaseService;
 import models.Review;
-import models.User;
+
 
 public class UserReview {
 	
@@ -72,8 +66,10 @@ public class UserReview {
 		
 		//Border
 		Border borderBlack = BorderFactory.createLineBorder(Color.BLACK);
-
-
+		
+		
+		
+	   
 	public UserReview() {
 		
 		//close another frame
@@ -90,6 +86,8 @@ public class UserReview {
 		panel2.setLayout(new BorderLayout());
 		panel3.setLayout(new FlowLayout(FlowLayout.RIGHT));
 		
+		
+		
 		reviewLabel.setFont(font1);
 		rateLabel.setFont(font1);
 		
@@ -99,6 +97,7 @@ public class UserReview {
 		
 		saveButton.setPreferredSize(new Dimension(100,30));
 		backButton.setPreferredSize(new Dimension(100,30));
+		
 		
 		reviewLabel.setBounds(20,20, 150, 20);
 		starlabel.setBounds(90,20,20,20);
@@ -121,11 +120,15 @@ public class UserReview {
 		starlabel2.setVisible(false);
 		
 		
+		
+		
+		
 		panel1.add(starlabel);	
 		panel1.add(starlabel2);
 		panel1.add(reviewLabel);
 		panel1.add(reviewTextArea);	
 		panel1.add(rateLabel);
+	
 		panel1.add(rateTextField);
 		panel3.add(saveButton);
 		panel3.add(backButton);
@@ -187,6 +190,7 @@ public class UserReview {
 
 	}
 	
+
 
 	public static void main(String[] args) {
 	    //Schedule a job for the event-dispatching thread:

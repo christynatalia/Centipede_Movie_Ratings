@@ -16,7 +16,7 @@ public class DatabaseService
 {
 	private static final String HOST = "jdbc:mysql://localhost:3306/",
 								USERNAME = "root",
-								PASSWORD = "christynatalia";
+								PASSWORD = "";
 	public static final String DB_NAME = "CMR",
 								TABLE_MOVIE = "Movie",
 								TABLE_REVIEW = "Review",
@@ -677,24 +677,14 @@ public class DatabaseService
 		return userid;
 	}
 	
-	
-	
 	public List<Review> getSelectedReviews(String moviename1)
 	{
-		int movieid1 = 0;
+		int movieid1 = getMovieID1(moviename1);
 		List<Review> reviews = new ArrayList<Review>();
 		PreparedStatement ps = null;
 		ResultSet rs = null;
 		
-		ps = this.prepStatement("SELECT movieID FROM Movie WHERE movieName=?");
-		
-		try
-		{
-			ps.setString(1, moviename1);
-			rs = ps.executeQuery();
-			if (rs.next())
-			{
-				movieid1 = rs.getInt(1);
+	
 				ps = this.prepStatement("SELECT * FROM Review WHERE movieID=?");
 				
 				try 
@@ -736,34 +726,6 @@ public class DatabaseService
 						catch(SQLException ex) {}
 					}
 				}
-			}
-		}
-			
-		catch(SQLException ex)
-		{
-			System.err.println(ex.getMessage());
-		}
-		finally
-		{
-			if (ps != null)
-			{
-				try
-				{
-					ps.close();
-				}
-				catch(SQLException ex) {}
-			}
-			
-			if (rs != null)
-			{
-				try
-				{
-					rs.close();
-				}
-				catch(SQLException ex) {}
-			}
-		}
-		
 		return reviews;
 	}
 	

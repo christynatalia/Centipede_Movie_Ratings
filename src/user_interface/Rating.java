@@ -114,8 +114,8 @@ public class Rating {
 		
 		
 		frame.setResizable(false);
-	    //frame.setDefaultCloseOperation;
-	    frame.setLocationRelativeTo(null);
+		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+	    
 	    frame.setVisible(true);
 		
 		table.setTableHeader(null);
@@ -156,6 +156,7 @@ public class Rating {
 
 	    frame.add(panel1);
 	    frame.pack();
+	    frame.setLocationRelativeTo(null);
 	    frame.setSize(500,300);
 	    frame.setVisible(true);
 	    

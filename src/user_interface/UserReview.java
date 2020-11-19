@@ -1,12 +1,14 @@
 package user_interface;
 
-import java.awt.BorderLayout; 
+import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Font;
+import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -17,60 +19,62 @@ import javax.swing.JPanel;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.border.Border;
+
 import database.DatabaseService;
+import giantsweetroll.ImageManager;
 import models.Review;
 
 
 public class UserReview {
 	
 	//Initialize the component
-		DatabaseService ds = new DatabaseService();
-		
-		//variable from another class
-		Login lg = new Login();
-		JFrame framelogin = lg.frame;
-		String usernameReview = lg.usernameLogin;
-		
-		MovieList ml = new MovieList();
-		JFrame frameMovieList = ml.frame;
-		String moviename = ml.movieNamee;
+	DatabaseService ds = new DatabaseService();
 	
-		JFrame frame=new JFrame("Centipede Movie Ratings");
-		//panel 1 for the text area and also label
-		JPanel panel1 = new JPanel();
-		//main one
-		JPanel panel2 = new JPanel();
-		//panel for the save button 
-		JPanel panel3 = new JPanel();
-		
-		ImageIcon icon = createImageIcon("/assets/starIcon.png", "star icon");
-		
-		//Review label
-		JLabel reviewLabel = new JLabel("Review");
-		//Rate label
-		JLabel rateLabel = new JLabel("Rate");
-		//create red star labels to kasi tau user belum ngisi
-		JLabel starlabel = new JLabel("*");
-		JLabel starlabel2 = new JLabel("*");
-		//Current user's review 
-		JLabel curUserReview = new JLabel(usernameReview + "'s review");
-		JLabel starIcon = new JLabel(icon);
-		
-		//Save Button 
-		JButton saveButton = new JButton("Save");
-		JButton backButton = new JButton("Back");
+	//variable from another class
+	Login lg = new Login();
+	JFrame framelogin = lg.frame;
+	String usernameReview = lg.usernameLogin;
 	
-		
-		//Rate Text Field
-		JTextField rateTextField = new JTextField();
-		//Review Text Area
-		JTextArea reviewTextArea = new JTextArea();
-		//fonts
-		Font fontTitle = new Font("Arial", Font.BOLD,40);
-		Font font1 = new Font("Arial",Font.PLAIN,18);
-		
-		//Border
-		Border borderBlack = BorderFactory.createLineBorder(Color.BLACK);
+	MovieList ml = new MovieList();
+	JFrame frameMovieList = ml.frame;
+	String moviename = ml.movieNamee;
+
+	JFrame frame=new JFrame("Centipede Movie Ratings");
+	//panel 1 for the text area and also label
+	JPanel panel1 = new JPanel();
+	//main one
+	JPanel panel2 = new JPanel();
+	//panel for the save button 
+	JPanel panel3 = new JPanel();
+	
+	ImageIcon icon = createImageIcon("/assets/starIcon.png", "star icon");
+	
+	//Review label
+	JLabel reviewLabel = new JLabel("Review");
+	//Rate label
+	JLabel rateLabel = new JLabel("Rate");
+	//create red star labels to kasi tau user belum ngisi
+	JLabel starlabel = new JLabel("*");
+	JLabel starlabel2 = new JLabel("*");
+	//Current user's review 
+	JLabel curUserReview = new JLabel(usernameReview + "'s review");
+	JLabel starIcon = new JLabel(icon);		//Icon for star
+	
+	//Save Button 
+	JButton saveButton = new JButton("Save");
+	JButton backButton = new JButton("Back");
+
+	
+	//Rate Text Field
+	JTextField rateTextField = new JTextField();
+	//Review Text Area
+	JTextArea reviewTextArea = new JTextArea();
+	//fonts
+	Font fontTitle = new Font("Arial", Font.BOLD,40);
+	Font font1 = new Font("Arial",Font.PLAIN,18);
+	
+	//Border
+	Border borderBlack = BorderFactory.createLineBorder(Color.BLACK);
 		
 		
 		
@@ -86,12 +90,9 @@ public class UserReview {
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setLocationRelativeTo(null);
 		
-		
 		panel1.setLayout(null);
 		panel2.setLayout(new BorderLayout());
 		panel3.setLayout(new FlowLayout(FlowLayout.RIGHT));
-		
-		
 		
 		reviewLabel.setFont(font1);
 		rateLabel.setFont(font1);
@@ -108,7 +109,8 @@ public class UserReview {
 		starlabel.setBounds(90,20,20,20);
 		starlabel2.setBounds(410,20,20,20);
 		reviewTextArea.setBounds(20,50,250,100);
-		rateLabel.setBounds(360, 20, 150, 20);
+		rateLabel.setBounds(360, 20, 50, 20);
+		this.starIcon.setBounds(420, 20, 16, 16);
 		rateTextField.setBounds(360,50,100,60);
 		
 		
@@ -130,10 +132,12 @@ public class UserReview {
 		panel1.add(reviewLabel);
 		panel1.add(reviewTextArea);	
 		panel1.add(rateLabel);
-	
+		panel1.add(this.starIcon);
 		panel1.add(rateTextField);
+	
 		panel3.add(saveButton);
 		panel3.add(backButton);
+		
 		panel2.add(panel1,BorderLayout.CENTER);
 		panel2.add(panel3,BorderLayout.SOUTH);
 		panel2.add(curUserReview,BorderLayout.NORTH);
@@ -195,7 +199,7 @@ public class UserReview {
 	private ImageIcon createImageIcon(String path, String description) {
 		java.net.URL imgURL = getClass().getResource(path);
 		if (imgURL != null) {
-			return new ImageIcon(imgURL, description);
+			return new ImageIcon(ImageManager.scaleImage((new ImageIcon(imgURL, description)).getImage(), 16, 16));
 		} else {
 			System.err.println("Couldn't find file: " + path);
 			return null;

@@ -6,6 +6,7 @@
 			<attribute name="module" value="true"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="lib" path="D:/LIB/SOFTWARE/mysql-connector-java-5.1.49 2/mysql-connector-java-5.1.49.jar"/>
+	<classpathentry kind="lib" path="G:/Program Files/Programming Libraries/Java Libraries/mysql-connector-java-5.1.49 2/mysql-connector-java-5.1.49.jar"/>
+	<classpathentry kind="lib" path="G:/Program Files/Programming Libraries/Java Libraries/GG-Library/GG-Library.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

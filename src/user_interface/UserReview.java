@@ -33,6 +33,8 @@ public class UserReview {
 		MovieList ml = new MovieList();
 		JFrame frameMovieList = ml.frame;
 		String moviename = ml.movieNamee;
+		
+		private int emptyNot = 0;
 	
 		JFrame frame=new JFrame("Centipede Movie Ratings");
 		//panel 1 for the text area and also label
@@ -140,22 +142,25 @@ public class UserReview {
 		saveButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
-				int movieID1 = 0;
-				movieID1 = ds.getMovieID1(moviename);
-				double rateStar = Double.parseDouble(rateTextField.getText());
-				float ratingUser = (float)rateStar;
-				int userid = ds.getUserID(usernameReview);
-				
+				emptyNot = 0;
 				starlabel.setVisible(false);
 				starlabel2.setVisible(false);
-				if (reviewTextArea.getText().equals("")) {
-					starlabel.setVisible(true);	 
+				if (reviewTextArea.getText().isEmpty()) {
+					starlabel.setVisible(true);
+					emptyNot = 1;
 				}
-				else if (rateTextField.getText().equals("")) {
+				if (rateTextField.getText().isEmpty()) {
 					starlabel2.setVisible(true);
+					emptyNot = 1;
 				}
 				
-				else { 
+				if (emptyNot == 0) { 
+					
+					int movieID1 = 0;
+					movieID1 = ds.getMovieID1(moviename);
+					double rateStar = Double.parseDouble(rateTextField.getText());
+					float ratingUser = (float)rateStar;
+					int userid = ds.getUserID(usernameReview);
 					
 					if (ratingUser >= 0.0 & ratingUser <= 5.0)
 					{

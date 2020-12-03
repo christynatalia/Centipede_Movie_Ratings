@@ -5,9 +5,12 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Font;
+import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+
 import javax.swing.BorderFactory;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -16,7 +19,9 @@ import javax.swing.JPanel;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.border.Border;
+
 import database.DatabaseService;
+import giantsweetroll.ImageManager;
 import models.Review;
 
 
@@ -43,6 +48,9 @@ public class UserReview {
 		JPanel panel2 = new JPanel();
 		//panel for the save button 
 		JPanel panel3 = new JPanel();
+		
+		ImageIcon icon = createImageIcon("/assets/starIcon.png", "star icon");
+		
 		//Review label
 		JLabel reviewLabel = new JLabel("Review");
 		//Rate label
@@ -51,7 +59,8 @@ public class UserReview {
 		JLabel starlabel = new JLabel("*");
 		JLabel starlabel2 = new JLabel("*");
 		//Current user's review 
-		JLabel curUserReview = new JLabel("User's review");
+		JLabel curUserReview = new JLabel(usernameReview + "'s review");
+		JLabel starIcon = new JLabel(icon);		//Icon for star
 		
 		//Save Button 
 		JButton saveButton = new JButton("Save");
@@ -106,6 +115,7 @@ public class UserReview {
 		starlabel2.setBounds(410,20,20,20);
 		reviewTextArea.setBounds(20,50,250,100);
 		rateLabel.setBounds(360, 20, 150, 20);
+		this.starIcon.setBounds(420, 20, 16, 16);
 		rateTextField.setBounds(360,50,100,60);
 		
 		
@@ -130,7 +140,7 @@ public class UserReview {
 		panel1.add(reviewLabel);
 		panel1.add(reviewTextArea);	
 		panel1.add(rateLabel);
-	
+		panel1.add(this.starIcon);
 		panel1.add(rateTextField);
 		panel3.add(saveButton);
 		panel3.add(backButton);
@@ -193,6 +203,16 @@ public class UserReview {
 		frame.add(panel2);
 		frame.setVisible(true);
 
+	}
+	
+	private ImageIcon createImageIcon(String path, String description) {
+		java.net.URL imgURL = getClass().getResource(path);
+		if (imgURL != null) {
+			return new ImageIcon(ImageManager.scaleImage((new ImageIcon(imgURL, description)).getImage(), 16, 16));
+		} else {
+			System.err.println("Couldn't find file: " + path);
+			return null;
+		}
 	}
 	
 

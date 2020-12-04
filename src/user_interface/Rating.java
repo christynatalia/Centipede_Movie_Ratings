@@ -15,6 +15,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
 
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -27,6 +28,7 @@ import javax.swing.table.TableCellRenderer;
 import javax.swing.table.TableModel;
 
 import database.DatabaseService;
+import giantsweetroll.ImageManager;
 import models.Movie;
 import models.Review;
 
@@ -47,6 +49,7 @@ public class Rating {
 	 String usernameReview = lg.usernameLogin;
 		
 	 float movrating = ds.countAverageMovieRating(ds.getMovieID1(moviename));
+	 ImageIcon icon = createImageIcon("/assets/starIcon.png", "star icon");
 	 
 	 JButton addReview = new JButton("Add New Review");
 	 JButton backButton = new JButton("Back");
@@ -54,6 +57,7 @@ public class Rating {
 	 JLabel movielabel = new JLabel(moviename);
 	 JLabel descriptionlabel = new JLabel("Description");
 	 JLabel starlabel = new JLabel(String.valueOf(movrating));
+	 JLabel starIcon = new JLabel(icon);		//Icon for star
 	 Font fontTitle = new Font("Arial", Font.BOLD,25);
 	 
 	//for the Rating title
@@ -66,6 +70,10 @@ public class Rating {
 	 JPanel panel4 = new JPanel();
 	 
 	 JPanel panel5 = new JPanel();
+	 //panel6 for the star and rating.
+	 JPanel panel6 = new JPanel();
+	 
+	 
 	 
 	 
 	 List<Review> rev = ds.getSelectedReviews(moviename);
@@ -139,8 +147,10 @@ public class Rating {
 	    panel3.setLayout(new GridLayout(0,3));
 	    panel4.setLayout(new BorderLayout());
 	    panel5.setLayout(new FlowLayout(FlowLayout.RIGHT));
+	    panel6.setLayout(new FlowLayout(FlowLayout.LEFT));
 	    
-	    
+	    panel6.add(starIcon);
+	    panel6.add(starlabel);
 	    panel5.add(addReview);
 	   	panel5.add(backButton);
 	    panel2.add(scrollPane,BorderLayout.CENTER);
@@ -148,7 +158,7 @@ public class Rating {
 	    panel1.add(ratinglabel,BorderLayout.NORTH);
 	    panel3.add(movielabel);
 	    panel3.add(descriptionlabel);
-	    panel3.add(starlabel);
+	    panel3.add(panel6);
 	    panel4.add(panel3,BorderLayout.NORTH);
 	    panel4.add(panel2,BorderLayout.CENTER);
 	    
@@ -181,6 +191,16 @@ public class Rating {
 		
 	}
 	
+	private ImageIcon createImageIcon(String path, String description) {
+		java.net.URL imgURL = getClass().getResource(path);
+		if (imgURL != null) {
+			return new ImageIcon(ImageManager.scaleImage((new ImageIcon(imgURL, description)).getImage(), 16, 16));
+		} else {
+			System.err.println("Couldn't find file: " + path);
+			return null;
+		}
+	}
+
 	private String[][] RatingList(int row, int col, List<Review> rev){
 		String[][] Reviews = new String[row][col];
 		float userRating = 0;
